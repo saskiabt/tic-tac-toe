@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="app.css"> 
+
+    <title>Tic-Tac-Toe</title>
+</head>
+<body>
+    <div id="content">
+        <div id="player-one-wrapper">
+            <h1 class="name">Player One</h1>
+            <label for="name-input"> Name:
+                <div>
+                    <input type="text" id= "player-one-name-input">
+                    <input type="button" value="Enter" id="player-one-name-btn" class = "name-enter">
+                </div>
+            </label>
+            <label for = "marker input">Marker
+                <div>
+                    <button class="xo" id= "x">X</button>
+                    <button class="xo" id= "o">O</button>
+                </div>
+            </label>
+        </div>
+        <div id="gameboard-wrapper">
+            <div id="gameboard-grid">
+                <div class="gamepiece-square"></div>
+                <div class="gamepiece-square"></div>
+                <div class="gamepiece-square"></div>
+                <div class="gamepiece-square"></div>
+                <div class="gamepiece-square"></div>
+                <div class="gamepiece-square"></div>
+                <div class="gamepiece-square"></div>
+                <div class="gamepiece-square"></div>
+                <div class="gamepiece-square"></div>
+            </div>
+            <div>
+                <button id = "clear">Reset</button>
+            </div>
+        </div>
+        <div id="player-two-wrapper">
+            <h1 class="name">Player Two</h1>
+            <div class = "player-two-btns">
+                <button class="playertwo-human">Human</button>
+                <div id="human">
+                    <label for="name-input"> Name:
+                        <input type="text" id= "name-input">
+                        <input type="button" value="Enter" id= "player-two-name-btn" class = "name-enter">
+                    </label>
+                </div>
+                <button class="playertwo-bot">Bot</button>
+            </div>
+            
+
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

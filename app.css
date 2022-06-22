@@ -1,0 +1,47 @@
+#content { 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}
+
+#gameboard-wrapper { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 25vh;
+}
+#gameboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1fr);
+    width: 50vw;
+    height: 50vh;
+}
+    
+.gamepiece-square {
+    border: .5px solid black;
+    display: flex;
+    justify-content: center;
+    padding:20px 20px;
+}
+
+.player-two-btns { 
+    display: flex;
+    gap:10px;
+}
+
+h1 { 
+    font-size: 24px;
+}
+
+#player-one-wrapper > div { 
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#human {
+    display: none;
+}
