@@ -1,17 +1,11 @@
 "use strict";
 
+let board = ['', '', '', '', '', '', '', '', '',];
+let gameIsPaused = true;
+
+
 const gameBoard = (function () {
-    let board = ['', '', '', '', '', '', '', '', ''];
-
-    // loop through gameboard squares and write value of each object in gameboard array
-    const writeValues = function() {
-        const gameboardSquares = document.querySelectorAll('.gamepiece-square')
-            for (let i=0; i<gameboardSquares.length; i++) { 
-                gameboardSquares[i].textContent = board[i]
-            }
-    }
-    writeValues();
-
+   
     // function to reset the board 
     const reset = () => { 
         for (let i=0; i<board.length; i++) { 
@@ -37,10 +31,10 @@ const gameBoard = (function () {
         [3,5,7]
     ]
 
+
 })();
 
 // Create player objects and populate their properties (marker and isHuman) using DOM buttons; 
-
 function Player(marker, isHuman) {
     return { marker, isHuman,}
 }
@@ -54,7 +48,7 @@ const playerTwo = Player();
 
 // Select which marker player one will use 
 const xo = document.querySelectorAll('.xo'); 
-    xo.forEach((button) => {
+    xo.forEach((button) => { 
         button.addEventListener('click', (event) => {
             const {target} = event; 
 
@@ -104,43 +98,53 @@ humanOrBot.forEach((button) => {
     })
 })
 
-// function to play the game once players are defined
-const game = (function () {
-    let playerOneTurn = null;
-    let playerTwoTurn = null;
 
-    if (playerOne.marker === "X") {
-        playerOneTurn = true;
-        setTurns();
-    } else if (playerOne.marker === "O") {
-        playerOneTurn = false; 
-        setTurns();
+function playerValidation(player) {
+    return (player.marker !== '' && player.isHuman !=='')
+}
+
+
+// FUNCTION TO CHOOSE FIRST PLAYER: X GOES FIRST 
+
+// Register click of game cell and if cell is empty and game is not paused, proceed: 
+function handleSquareClick(event) { 
+    const {target} = event
+    const targetIndex = parseInt(target.id, 10); 
+
+    if(playerValidation(playerOne) === true && playerValidation(playerTwo === true)) {
+        gameIsPaused = false;
     }
 
-    function setTurns() {
-        if (playerOneTurn === true) {
-            playerTwoTurn = false;
-        } else if (playerTwoTurn === true) {
-            playerOneTurn = false; 
+    if (board[targetIndex] === '' && gameIsPaused === false) {
+        let currentPlayer = chooseFirstPlayer(); 
+        playRound(target,targetIndex,currentPlayer); 
+        // handleTurnChange();
+        // handleWinnerValidation(); 
+    }
+
+    function chooseFirstPlayer() { 
+        let currentPlayer; 
+        if (playerOne.marker === 'X') {
+            currentPlayer = playerOne
+        } else if (playerOne.marker === 'O') {
+            currentPlayer = playerTwo; 
         }
-    }; 
+        return currentPlayer; 
+    }    
+}
 
-    function switchTurns() {
-        if (playerOneTurn === true) { 
-            playerOneTurn = false;
-            setTurns(); 
-        } else if (playerOneTurn === false)
-            playerOneTurn = true; 
-            setTurns(); 
-    }
+function playRound(target,targetIndex,currentPlayer) {
+    board[targetIndex] = currentPlayer.marker; 
+    target.textContent = currentPlayer.marker;
+}
 
-    if (playerOneTurn === true) {
-        const squares = document.querySelectorAll('.gamepiece-square');
-        squares.forEach((square) => {
-            square.addEventListener('click', () => {
-                
-            })
-        })
-    }
-})();
+
+// function handleTurnChange() 
+
+// handleWinnerValidation(); 
+
+
+
+document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click',handleSquareClick));
+
 
