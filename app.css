@@ -24,24 +24,28 @@
     border: .5px solid black;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding:20px 20px;
 }
 
-.player-two-btns { 
+#player-one-wrapper { 
     display: flex;
-    gap:10px;
+    flex-direction: column;
+}
+
+#player-two-wrapper { 
+    display: flex;
+    flex-direction: column;
+}
+
+.player-two-btns {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
 }
 
 h1 { 
-    font-size: 24px;
-}
-
-#player-one-wrapper > div { 
     display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-#human {
-    display: none;
+    justify-content: center;
+    align-items: center;
 }

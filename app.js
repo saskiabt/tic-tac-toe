@@ -1,7 +1,7 @@
 "use strict";
 
 const gameBoard = (function () {
-    let board = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
+    let board = ['', '', '', '', '', '', '', '', ''];
 
     // loop through gameboard squares and write value of each object in gameboard array
     const writeValues = function() {
@@ -37,71 +37,110 @@ const gameBoard = (function () {
         [3,5,7]
     ]
 
+})();
 
+// Create player objects and populate their properties (marker and isHuman) using DOM buttons; 
 
-}());
+function Player(marker, isHuman) {
+    return { marker, isHuman,}
+}
 
-// create new player object 
-function createPlayer() {
-    const Player = (name,isHuman,marker) => ({ name, isHuman, marker })
+Player.prototype.Write = function(elem) {
+    elem.textContent = this.marker
+}
 
-    const playerOne = Player('',true,'')
+const playerOne = Player('', true);
+const playerTwo = Player(); 
 
-    const playerOneWrapper = document.querySelector("#player-one-wrapper"); 
-    const playerTwoWrapper = document.querySelector("#player-two-wrapper"); 
-
-
-    // Add player one name when enter button is pressed on name field
-    let playerOneName = ''; 
-    document.querySelector("#player-one-name-btn").addEventListener('click', () => { 
-        playerOneName = document.querySelector("#player-one-name-input").value; 
-
-        document.querySelector("#player-one-wrapper > label").style.display = 'none';
-
-        const playerOneNameDisplay = document.createElement('div'); 
-        playerOneWrapper.append(playerOneNameDisplay); 
-        playerOneNameDisplay.textContent = playerOneName; 
-        playerOne.name = playerOneName; 
-    })
-
-    // Pick player markers when player one selects either X or O button 
-    let playerOneMarker = ''
-    let playerTwoMarker = ''
-    const xo = document.querySelectorAll('.xo'); 
+// Select which marker player one will use 
+const xo = document.querySelectorAll('.xo'); 
     xo.forEach((button) => {
         button.addEventListener('click', (event) => {
             const {target} = event; 
-            if (target === document.querySelector("#x")) {
-                playerOneMarker = event.target.textContent;
-                playerTwoMarker = 'O';
+
+            if (target === document.getElementById('x')) {
+                playerOne.marker = 'X'
+                playerTwo.marker = 'O'
                 displayMarkers(); 
 
-            } else if (target === document.querySelector("#o")) { 
-                playerOneMarker = event.target.textContent;
-                playerTwoMarker = 'X'
+            } else if (target === document.getElementById('o')) {
+                playerOne.marker = 'O'
+                playerTwo.marker = 'X'
                 displayMarkers(); 
             }
 
-            function displayMarkers() {
-                document.querySelector("#player-one-wrapper > label:nth-child(3)").style.display = 'none'; 
-                const choicesWrapperOne = document.createElement('div'); 
-                playerOneWrapper.appendChild(choicesWrapperOne); 
+            document.querySelector('.marker-wrapper').style.display = 'none'; 
 
-                const choicesWrapperTwo = document.createElement('div'); 
-                playerTwoWrapper.appendChild(choicesWrapperTwo); 
-
-                const playerOneMarkerChoice = document.createElement('div'); 
-                choicesWrapperOne.appendChild(playerOneMarkerChoice); 
-                playerOneMarkerChoice.textContent = playerOneMarker; 
-                playerOne.marker = playerOneMarker;
-
-                const playerTwoMarkerChoice = document.createElement('div'); 
-                choicesWrapperTwo.appendChild(playerTwoMarkerChoice); 
-                playerTwoMarkerChoice.textContent = playerTwoMarker; 
+            function displayMarkers() {             
+                const markerDisplayOne = document.createElement('div'); 
+                document.querySelector("#player-one-wrapper").append(markerDisplayOne); 
+                markerDisplayOne.textContent = `Marker = ${playerOne.marker}`; 
+            
+                const markerDisplayTwo = document.createElement('div'); 
+                document.querySelector("#player-two-wrapper").insertBefore(markerDisplayTwo,document.querySelector("#player-two-wrapper > div.human-or-bot")); 
+                markerDisplayTwo.textContent = `Marker = ${playerTwo.marker}`; 
             }
-        })
+        });
     }); 
-    return {playerOne}; 
-}
 
-const players = createPlayer();
+// select whether player two is a bot or human
+const humanOrBot = document.querySelectorAll('.human-bot') 
+humanOrBot.forEach((button) => {
+    button.addEventListener('click', (event) => {
+        const {target} = event; 
+        if (target === document.getElementById('bot')) {
+            playerTwo.isHuman = false;
+            displayPlayer();
+        } else if (target === document.getElementById('human')) { 
+            playerTwo.isHuman = true
+            displayPlayer();
+        }
+
+        function displayPlayer() { 
+            const choice = document.querySelector("#player-two-wrapper > div > div"); 
+            // eslint-disable-next-line no-unused-expressions
+            playerTwo.isHuman ? choice.textContent = "Opponent = Human" : choice.textContent = "Opponent = Bot"; 
+        }
+    })
+})
+
+// function to play the game once players are defined
+const game = (function () {
+    let playerOneTurn = null;
+    let playerTwoTurn = null;
+
+    if (playerOne.marker === "X") {
+        playerOneTurn = true;
+        setTurns();
+    } else if (playerOne.marker === "O") {
+        playerOneTurn = false; 
+        setTurns();
+    }
+
+    function setTurns() {
+        if (playerOneTurn === true) {
+            playerTwoTurn = false;
+        } else if (playerTwoTurn === true) {
+            playerOneTurn = false; 
+        }
+    }; 
+
+    function switchTurns() {
+        if (playerOneTurn === true) { 
+            playerOneTurn = false;
+            setTurns(); 
+        } else if (playerOneTurn === false)
+            playerOneTurn = true; 
+            setTurns(); 
+    }
+
+    if (playerOneTurn === true) {
+        const squares = document.querySelectorAll('.gamepiece-square');
+        squares.forEach((square) => {
+            square.addEventListener('click', () => {
+                
+            })
+        })
+    }
+})();
+

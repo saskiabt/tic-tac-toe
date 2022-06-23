@@ -12,46 +12,35 @@
     <div id="content">
         <div id="player-one-wrapper">
             <h1 class="name">Player One</h1>
-            <label for="name-input"> Name:
-                <div>
-                    <input type="text" id= "player-one-name-input">
-                    <input type="button" value="Enter" id="player-one-name-btn" class = "name-enter">
-                </div>
-            </label>
-            <label for = "marker input">Marker
-                <div>
+            <div class = marker-wrapper>Marker
+                <div class="player-one-btns">
                     <button class="xo" id= "x">X</button>
                     <button class="xo" id= "o">O</button>
                 </div>
-            </label>
+            </div>
         </div>
         <div id="gameboard-wrapper">
             <div id="gameboard-grid">
-                <div class="gamepiece-square"></div>
-                <div class="gamepiece-square"></div>
-                <div class="gamepiece-square"></div>
-                <div class="gamepiece-square"></div>
-                <div class="gamepiece-square"></div>
-                <div class="gamepiece-square"></div>
-                <div class="gamepiece-square"></div>
-                <div class="gamepiece-square"></div>
-                <div class="gamepiece-square"></div>
+                <div class="gamepiece-square" id="1"></div>
+                <div class="gamepiece-square" id ="2"></div>
+                <div class="gamepiece-square" id="3"></div>
+                <div class="gamepiece-square" id="4"></div>
+                <div class="gamepiece-square" id="5"></div>
+                <div class="gamepiece-square" id="6"></div>
+                <div class="gamepiece-square" id= "7"></div>
+                <div class="gamepiece-square" id= "8"></div>
+                <div class="gamepiece-square" id="9"></div>
             </div>
             <div>
                 <button id = "clear">Reset</button>
             </div>
         </div>
         <div id="player-two-wrapper">
-            <h1 class="name">Player Two</h1>
-            <div class = "player-two-btns">
-                <button class="playertwo-human">Human</button>
-                <div id="human">
-                    <label for="name-input"> Name:
-                        <input type="text" id= "name-input">
-                        <input type="button" value="Enter" id= "player-two-name-btn" class = "name-enter">
-                    </label>
-                </div>
-                <button class="playertwo-bot">Bot</button>
+            <h1 class="name">Player Two:</h1>
+            <div class = "human-or-bot">
+                <button id="human" class = "human-bot">Human</button>
+                <button id="bot" class = "human-bot">Bot</button>
+                <div class = "result"></div>
             </div>
             
 
