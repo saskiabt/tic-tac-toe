@@ -2,9 +2,9 @@
 
 let board = ['', '', '', '', '', '', '', '', '',];
 let gameIsPaused = true;
-const playerOne = Player('', true);
-const playerTwo = Player('', true); 
-const cpu = Player('', false); 
+const playerOne = Player('Player One','', true);
+const playerTwo = Player('Player Two','', true); 
+const cpu = Player('CPU','', false); 
 let opponent; 
 
 
@@ -37,11 +37,11 @@ const gameBoard = (function () {
 })();
 
 // Create player objects and populate their properties (marker and isHuman) using DOM buttons; 
-function Player(marker, isHuman) {
+function Player(name, marker, isHuman) {
     // Function to check if player has selected a marker and an opponent type: 
     const validate = (player) => (player.marker !== '' && player.isHuman !=='')
 
-    return { marker, isHuman, validate,}
+    return { name, marker, isHuman, validate,}
 }
 
 Player.prototype.Write = function(elem) {
@@ -114,10 +114,11 @@ function handleSquareClick(event) {
         currentPlayer = opponent; 
     }
     return currentPlayer; 
-}   
+    };  
 
     if (board[targetIndex] === '' && !gameIsPaused) {
         let currentPlayer = chooseFirstPlayer(); 
+        console.log({currentPlayer})
         playRound(target,targetIndex,currentPlayer); 
         // handleTurnChange();
         // handleWinnerValidation(); 
