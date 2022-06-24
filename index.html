@@ -10,13 +10,25 @@
 </head>
 <body>
     <div id="content">
-        <div id="player-one-wrapper">
-            <h1 class="name">Player One</h1>
-            <div class = marker-wrapper>Marker
-                <div class="player-one-btns">
+        <div id="players">
+            <div id="player-one-wrapper">
+                <h1 class="name">Player One</h1>
+                <div id = "player-one-marker"></div>
+            </div>
+            <div id = "buttons">
+                <div class="player-one-btns"> Choose Your Marker:
                     <button class="xo" id= "x">X</button>
                     <button class="xo" id= "o">O</button>
                 </div>
+                <div class = "choose-opponent"> Choose Opponent:
+                    <button id="human" class = "human-bot">Human</button>
+                    <button id="bot" class = "human-bot">Bot</button>
+                </div>
+            </div>
+            <div id="player-two-wrapper">
+                <h1 class="name">Player Two:</h1>
+                <div id= "player-two-marker"></div>
+                <div id = "opponent-type"></div>
             </div>
         </div>
         <div id="gameboard-wrapper">
@@ -34,16 +46,6 @@
             <div>
                 <button id = "clear">Reset</button>
             </div>
-        </div>
-        <div id="player-two-wrapper">
-            <h1 class="name">Player Two:</h1>
-            <div class = "human-or-bot">
-                <button id="human" class = "human-bot">Human</button>
-                <button id="bot" class = "human-bot">Bot</button>
-                <div class = "result"></div>
-            </div>
-            
-
         </div>
     </div>
     <script src="app.js"></script>

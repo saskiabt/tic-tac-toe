@@ -1,8 +1,14 @@
 #content { 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     gap: 20px;
+}
+
+#players { 
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 20px
 }
 
 #gameboard-wrapper { 
@@ -10,7 +16,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 25vh;
+    padding-top: 10vh;
 }
 #gameboard-grid {
     display: grid;
@@ -31,11 +37,16 @@
 #player-one-wrapper { 
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
 
 #player-two-wrapper { 
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .player-two-btns {
@@ -53,4 +64,11 @@ h1 {
 .human-bot:active {
     background-color: yellow;
     /* transition: all 3s; */
+}
+
+#buttons {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    gap: 10px;    
 }

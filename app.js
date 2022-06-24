@@ -63,16 +63,13 @@ const xo = document.querySelectorAll('.xo');
                 displayMarkers(); 
             }
 
-            document.querySelector('.marker-wrapper').style.display = 'none'; 
-
+            document.querySelector("#buttons > div.player-one-btns").style.display = "none";
             function displayMarkers() {             
-                const markerDisplayOne = document.createElement('div'); 
-                document.querySelector("#player-one-wrapper").append(markerDisplayOne); 
+                const markerDisplayOne = document.querySelector("#player-one-marker");
                 markerDisplayOne.textContent = `Marker = ${playerOne.marker}`; 
             
-                const markerDisplayTwo = document.createElement('div'); 
-                document.querySelector("#player-two-wrapper").insertBefore(markerDisplayTwo,document.querySelector("#player-two-wrapper > div.human-or-bot")); 
-                markerDisplayTwo.textContent = `Marker = ${playerTwo.marker}`; 
+                const markerDisplayTwo = document.querySelector("#player-two-marker");
+                markerDisplayTwo.textContent = `Marker = ${playerTwo.marker}`
             }
         });
     }); 
@@ -91,9 +88,9 @@ humanOrBot.forEach((button) => {
         }
 
         function displayPlayer() { 
-            const choice = document.querySelector("#player-two-wrapper > div > div"); 
+            const opponentType = document.querySelector("#opponent-type"); 
             // eslint-disable-next-line no-unused-expressions
-            playerTwo.isHuman ? choice.textContent = "Opponent = Human" : choice.textContent = "Opponent = Bot"; 
+            playerTwo.isHuman ? opponentType.textContent = "Opponent = Human" : opponentType.textContent = "Opponent = Bot"; 
         }
     })
 })
@@ -111,11 +108,12 @@ function handleSquareClick(event) {
     const {target} = event
     const targetIndex = parseInt(target.id, 10); 
 
-    if(playerValidation(playerOne) === true && playerValidation(playerTwo === true)) {
-        gameIsPaused = false;
-    }
+   if (playerValidation(playerOne)  && playerValidation(playerTwo)) {
+       gameIsPaused = false; 
+   }; 
 
-    if (board[targetIndex] === '' && gameIsPaused === false) {
+
+    if (board[targetIndex] === '' && !gameIsPaused) {
         let currentPlayer = chooseFirstPlayer(); 
         playRound(target,targetIndex,currentPlayer); 
         // handleTurnChange();
