@@ -2,6 +2,11 @@
 
 let board = ['', '', '', '', '', '', '', '', '',];
 let gameIsPaused = true;
+const playerOne = Player('', true);
+const playerTwo = Player('', true); 
+const cpu = Player('', false); 
+let opponent; 
+
 
 
 const gameBoard = (function () {
@@ -11,14 +16,11 @@ const gameBoard = (function () {
         for (let i=0; i<board.length; i++) { 
             board[i] = ''
         };
-        writeValues(); 
-    };
+     };
     
     // reset board on reset button click; 
     const resetButton = document.getElementById('clear'); 
-    resetButton.addEventListener('click', () => {
-        reset();
-    });
+    resetButton.addEventListener('click', reset)
 
     const winningCombinations = [
         [1,2,3],
@@ -36,82 +38,83 @@ const gameBoard = (function () {
 
 // Create player objects and populate their properties (marker and isHuman) using DOM buttons; 
 function Player(marker, isHuman) {
-    return { marker, isHuman,}
+    // Function to check if player has selected a marker and an opponent type: 
+    const validate = (player) => (player.marker !== '' && player.isHuman !=='')
+
+    return { marker, isHuman, validate,}
 }
 
 Player.prototype.Write = function(elem) {
     elem.textContent = this.marker
 }
 
-const playerOne = Player('', true);
-const playerTwo = Player(); 
-
 // Select which marker player one will use 
+const selectMarkers = (event) => {
+    const {target} = event; 
+
+    if (target.id === 'x') {
+        playerOne.marker = 'X';
+        playerTwo.marker = 'O';
+        cpu.marker = 'O';
+        displayMarkers();
+    } else if (target.id === 'o') {
+        playerOne.marker = 'O';
+        playerTwo.marker = 'X';
+        cpu.marker = 'X';
+        displayMarkers();
+    }
+
+    function displayMarkers() {      
+        document.querySelector("#buttons > div.player-one-btns").style.display = "none";
+
+        const markerDisplayOne = document.querySelector("#player-one-marker");
+        markerDisplayOne.textContent = `Marker = ${playerOne.marker}`; 
+
+        const markerDisplayTwo = document.querySelector("#player-two-marker");
+        markerDisplayTwo.textContent = `Marker = ${playerTwo.marker}`
+    };
+};
+
 const xo = document.querySelectorAll('.xo'); 
-    xo.forEach((button) => { 
-        button.addEventListener('click', (event) => {
-            const {target} = event; 
-
-            if (target === document.getElementById('x')) {
-                playerOne.marker = 'X'
-                playerTwo.marker = 'O'
-                displayMarkers(); 
-
-            } else if (target === document.getElementById('o')) {
-                playerOne.marker = 'O'
-                playerTwo.marker = 'X'
-                displayMarkers(); 
-            }
-
-            document.querySelector("#buttons > div.player-one-btns").style.display = "none";
-            function displayMarkers() {             
-                const markerDisplayOne = document.querySelector("#player-one-marker");
-                markerDisplayOne.textContent = `Marker = ${playerOne.marker}`; 
-            
-                const markerDisplayTwo = document.querySelector("#player-two-marker");
-                markerDisplayTwo.textContent = `Marker = ${playerTwo.marker}`
-            }
-        });
-    }); 
+xo.forEach(button => button.addEventListener('click', selectMarkers)); 
 
 // select whether player two is a bot or human
-const humanOrBot = document.querySelectorAll('.human-bot') 
-humanOrBot.forEach((button) => {
-    button.addEventListener('click', (event) => {
-        const {target} = event; 
-        if (target === document.getElementById('bot')) {
-            playerTwo.isHuman = false;
-            displayPlayer();
-        } else if (target === document.getElementById('human')) { 
-            playerTwo.isHuman = true
-            displayPlayer();
-        }
+function chooseOpponent(event) {
+    const {target} = event; 
+    const opponentType = document.querySelector("#opponent-type"); 
 
-        function displayPlayer() { 
-            const opponentType = document.querySelector("#opponent-type"); 
-            // eslint-disable-next-line no-unused-expressions
-            playerTwo.isHuman ? opponentType.textContent = "Opponent = Human" : opponentType.textContent = "Opponent = Bot"; 
-        }
-    })
-})
+    if (target === document.getElementById('bot')) {
+        opponent = cpu; 
+        opponentType.textContent = "Opponent = Bot"
+    } else if (target === document.getElementById('human')) {
+        opponent = playerTwo; 
+        opponentType.textContent = "Opponent = Human"; 
+    }; 
 
-
-function playerValidation(player) {
-    return (player.marker !== '' && player.isHuman !=='')
+    return opponent; 
 }
+const humanOrBot = document.querySelectorAll('.human-bot') 
+humanOrBot.forEach( button => button.addEventListener('click', chooseOpponent)); 
 
-
-// FUNCTION TO CHOOSE FIRST PLAYER: X GOES FIRST 
 
 // Register click of game cell and if cell is empty and game is not paused, proceed: 
 function handleSquareClick(event) { 
     const {target} = event
     const targetIndex = parseInt(target.id, 10); 
 
-   if (playerValidation(playerOne)  && playerValidation(playerTwo)) {
+   if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) {
        gameIsPaused = false; 
    }; 
 
+   function chooseFirstPlayer() { 
+    let currentPlayer; 
+    if (playerOne.marker === 'X') {
+        currentPlayer = playerOne;
+    } else if (playerOne.marker === 'O') {
+        currentPlayer = opponent; 
+    }
+    return currentPlayer; 
+}   
 
     if (board[targetIndex] === '' && !gameIsPaused) {
         let currentPlayer = chooseFirstPlayer(); 
@@ -120,15 +123,7 @@ function handleSquareClick(event) {
         // handleWinnerValidation(); 
     }
 
-    function chooseFirstPlayer() { 
-        let currentPlayer; 
-        if (playerOne.marker === 'X') {
-            currentPlayer = playerOne
-        } else if (playerOne.marker === 'O') {
-            currentPlayer = playerTwo; 
-        }
-        return currentPlayer; 
-    }    
+     
 }
 
 function playRound(target,targetIndex,currentPlayer) {

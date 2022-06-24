@@ -16,7 +16,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 10vh;
+    /* padding-top: 10vh; */
 }
 #gameboard-grid {
     display: grid;
@@ -37,7 +37,7 @@
 #player-one-wrapper { 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -45,7 +45,7 @@
 #player-two-wrapper { 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -70,5 +70,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-self: flex-end;
-    gap: 10px;    
+    gap: 10px;   
+    padding-top: 150px; 
+    padding-bottom: 50px;
 }
