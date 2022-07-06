@@ -13,11 +13,17 @@ const gameBoard = (function () {
     const reset = () => { 
         for (let i=0; i<board.length; i++) { 
             board[i] = ''
+            document.querySelectorAll('.gamepiece-square').forEach(square => square.textContent = '');
         };
+
+        document.querySelector("#players > div.winner-wrapper").remove(); 
+        document.querySelector("#buttons").style.display = "flex"; 
+        document.querySelector("#buttons > div.player-one-btns").style.display = "flex"; 
+        document.querySelector("#player-two-wrapper > div").style.display = "none";
+
+
      };
-    // reset board on reset button click; 
-    const resetButton = document.getElementById('clear'); 
-    resetButton.addEventListener('click', reset);
+    document.getElementById('clear').addEventListener('click', reset);
 })();
 
 // Create player objects and populate their properties (marker and isHuman) using DOM buttons; 
@@ -33,6 +39,8 @@ Player.prototype.Write = function(elem) {
 
 // Select which marker player one will use 
 const selectMarkers = (event) => {
+    document.querySelector("#player-two-wrapper > div").style.display = "flex";
+
     const {target} = event; 
 
     if (target.id === 'x') {
@@ -65,6 +73,7 @@ xo.forEach(button => button.addEventListener('click', selectMarkers));
 
 // select whether player two is a bot or human
 function chooseOpponent(event) {
+    document.querySelector("#player-two-wrapper > div").style.display = "flex";
     const {target} = event; 
     const opponentType = document.querySelector("#opponent-type"); 
 
@@ -98,7 +107,6 @@ function handleSquareClick(event) {
 
    if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) gameIsPaused = false; 
 
-
     function playRound(target,targetIndex,currentPlayer) {
         const tar = target; 
         board[targetIndex] = currentPlayer.marker; 
@@ -108,7 +116,6 @@ function handleSquareClick(event) {
     function checkSquaresForWinner(currentPlayer) {
         // check if board has 3 in a row in any of the winning combinations:
         let isValid = false;
-        // console.log(board)
         const winningCombinations = [
             [0,1,2],
             [3,4,5],
@@ -126,9 +133,8 @@ function handleSquareClick(event) {
                 break; 
             } 
         }; 
-        console.log(isValid);
         return(isValid); 
-    }
+    }; 
 
     function handleTurnChange() {
         if (currentPlayer === playerOne) {
@@ -153,7 +159,6 @@ function handleSquareClick(event) {
     };
    
     if (board[targetIndex] === '' && !gameIsPaused) {
-        // console.log({currentPlayer})
         playRound(target,targetIndex,currentPlayer); 
         if (!checkSquaresForWinner(currentPlayer)) { 
              handleTurnChange(currentPlayer);
@@ -161,10 +166,7 @@ function handleSquareClick(event) {
               handleWinnerValidation(); 
         }
     };
-
 };
-
-
 
 document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click',handleSquareClick));
 

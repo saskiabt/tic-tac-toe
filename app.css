@@ -49,6 +49,10 @@
     align-items: center;
 }
 
+#player-two-wrapper > div { 
+    display: flex;
+    flex-direction: column;
+}
 .player-two-btns {
     display: flex;
     gap: 10px;
