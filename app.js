@@ -8,6 +8,16 @@ const cpu = Player('CPU','', false);
 let currentPlayer = null;
 let opponent;
 
+// Function to set currentPlayer to selection (either player One (if X is selected) or player Two/ bot if O is selected))
+function chooseFirstPlayer() {
+    if (playerOne.marker === 'X') {
+        currentPlayer = playerOne;
+    } else if (playerOne.marker === 'O') {
+        currentPlayer = opponent; 
+    }
+    return currentPlayer;
+}; 
+
 const gameBoard = (function () {
     // function to reset the board 
     const reset = () => { 
@@ -16,13 +26,16 @@ const gameBoard = (function () {
             document.querySelectorAll('.gamepiece-square').forEach(square => square.textContent = '');
         };
 
-        document.querySelector("#players > div.winner-wrapper").remove(); 
+        document.querySelector("#winner-wrapper").remove();
         document.querySelector("#buttons").style.display = "flex"; 
         document.querySelector("#buttons > div.player-one-btns").style.display = "flex"; 
         document.querySelector("#player-two-wrapper > div").style.display = "none";
+        document.querySelector("#player-one-marker").style.display = "none"; 
 
-
+        chooseFirstPlayer(); 
+        document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click',handleSquareClick));
      };
+   
     document.getElementById('clear').addEventListener('click', reset);
 })();
 
@@ -33,16 +46,16 @@ function Player(name, marker, isHuman) {
     return {name, marker, isHuman, validate,}
 }
 
-Player.prototype.Write = function(elem) {
-    elem.textContent = this.marker
-}
+// Player.prototype.Write = function(elem) {
+//     elem.textContent = this.marker
+// }
 
 // Select which marker player one will use 
 const selectMarkers = (event) => {
     document.querySelector("#player-two-wrapper > div").style.display = "flex";
+    document.querySelector("#player-one-marker").style.display = "flex"; 
 
     const {target} = event; 
-
     if (target.id === 'x') {
         playerOne.marker = 'X';
         playerTwo.marker = 'O';
@@ -54,8 +67,6 @@ const selectMarkers = (event) => {
         cpu.marker = 'X';
         displayMarkers();
     }
-
-    // currentPlayer = chooseFirstPlayer(); 
 
     function displayMarkers() {      
         document.querySelector("#buttons > div.player-one-btns").style.display = "none";
@@ -86,15 +97,6 @@ function chooseOpponent(event) {
     }; 
 
     currentPlayer = chooseFirstPlayer(); 
-
-    function chooseFirstPlayer() {
-        if (playerOne.marker === 'X') {
-            currentPlayer = playerOne;
-        } else if (playerOne.marker === 'O') {
-            currentPlayer = opponent; 
-        }
-        return currentPlayer;
-    }
 }
 const humanOrBot = document.querySelectorAll('.human-bot') 
 humanOrBot.forEach( button => button.addEventListener('click', chooseOpponent)); 
@@ -152,7 +154,7 @@ function handleSquareClick(event) {
     function displayWinner() {
             document.getElementById('buttons').style.display = "none"; 
             const winnerWrapper = document.createElement('div'); 
-            winnerWrapper.classList.add('winner-wrapper'); 
+            winnerWrapper.setAttribute('id','winner-wrapper'); 
             document.querySelector("#players").insertBefore(winnerWrapper,document.querySelector("#player-two-wrapper")); 
             winnerWrapper.textContent = `Winner is ${winner.name}`
         }; 
