@@ -26,14 +26,23 @@ const gameBoard = (function () {
             document.querySelectorAll('.gamepiece-square').forEach(square => square.textContent = '');
         };
 
-        document.querySelector("#winner-wrapper").remove();
+        // document.querySelector("#winner-wrapper").remove();
         document.querySelector("#buttons").style.display = "flex"; 
         document.querySelector("#buttons > div.player-one-btns").style.display = "flex"; 
+        document.querySelector("#buttons > div.choose-opponent").style.display = "flex";
         document.querySelector("#player-two-wrapper > div").style.display = "none";
         document.querySelector("#player-one-marker").style.display = "none"; 
+        document.querySelector("#winner-wrapper").remove();
 
-        chooseFirstPlayer(); 
-        document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click',handleSquareClick));
+
+        currentPlayer = null;
+        opponent = null;
+        playerOne.marker = '';
+        playerTwo.marker = '';
+        cpu.marker = ''; 
+
+        if (!currentPlayer) currentPlayer = chooseFirstPlayer(); 
+        // document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click',handleSquareClick));
      };
    
     document.getElementById('clear').addEventListener('click', reset);
@@ -45,10 +54,6 @@ function Player(name, marker, isHuman) {
     const validate = (player) => (player.marker !== '' && player.isHuman !=='')
     return {name, marker, isHuman, validate,}
 }
-
-// Player.prototype.Write = function(elem) {
-//     elem.textContent = this.marker
-// }
 
 // Select which marker player one will use 
 const selectMarkers = (event) => {
@@ -77,6 +82,8 @@ const selectMarkers = (event) => {
         const markerDisplayTwo = document.querySelector("#player-two-marker");
         markerDisplayTwo.textContent = `Marker = ${playerTwo.marker}`
     };
+
+    if (!currentPlayer) currentPlayer = chooseFirstPlayer(); 
 };
 
 const xo = document.querySelectorAll('.xo'); 
@@ -84,6 +91,7 @@ xo.forEach(button => button.addEventListener('click', selectMarkers));
 
 // select whether player two is a bot or human
 function chooseOpponent(event) {
+    document.querySelector("#buttons > div.choose-opponent").style.display = "none";
     document.querySelector("#player-two-wrapper > div").style.display = "flex";
     const {target} = event; 
     const opponentType = document.querySelector("#opponent-type"); 
@@ -137,6 +145,15 @@ function handleSquareClick(event) {
         }; 
         return(isValid); 
     }; 
+
+    function checkSquaresForTie() {
+        let isTie = false;
+        board.every((elem)=> {
+            if(elem) isTie = true 
+        })
+        console.log(isTie)
+        return isTie; 
+    }
 
     function handleTurnChange() {
         if (currentPlayer === playerOne) {
