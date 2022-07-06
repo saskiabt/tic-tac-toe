@@ -138,7 +138,9 @@ function handleSquareClick(event) {
         ]; 
 
         for (let i=0; i<winningCombinations.length; i++) {
-            if (board[winningCombinations[i][0]] === currentPlayer.marker && board[winningCombinations[i][1]] === currentPlayer.marker && board[winningCombinations[i][2]] === currentPlayer.marker) {
+            if (board[winningCombinations[i][0]] === currentPlayer.marker && 
+                board[winningCombinations[i][1]] === currentPlayer.marker && 
+                board[winningCombinations[i][2]] === currentPlayer.marker) {
                 isValid = true; 
                 break; 
             } 
@@ -149,10 +151,22 @@ function handleSquareClick(event) {
     }; 
 
     function checkSquaresForTie() {
-        const isFull = (currentSquare) => currentSquare !== ''
-        const boardIsFull = board.every(isFull); 
-        console.log(boardIsFull); 
-        return boardIsFull;
+       let fullSquares = board.filter((element)=> {
+            if(element !=='') return element; 
+       })
+       console.log(fullSquares);
+
+       if(fullSquares.length === 9) {
+            gameIsPaused = true;
+            displayWinner(); 
+        }; 
+
+        function displayWinner() {
+            const winnerWrapper = document.createElement('div'); 
+            winnerWrapper.setAttribute('id','winner-wrapper'); 
+            document.querySelector("#players").insertBefore(winnerWrapper,document.querySelector("#player-two-wrapper")); 
+            winnerWrapper.textContent = `Tie!`
+       }
     }
 
     function handleTurnChange() {
@@ -163,7 +177,7 @@ function handleSquareClick(event) {
         }
     }; 
 
-    const handleWinnerValidation = (event) => {
+    const handleWinnerValidation = () => {
         let winner = currentPlayer;
         displayWinner(); 
 
@@ -193,12 +207,6 @@ function handleSquareClick(event) {
 
 document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
     
-// document.querySelectorAll('.gamepiece-square').forEach((square) => {
-//     square.addEventListener('click', (event) => {
 
-//         handleSquareClick(event); 
-            
-//     })
-// });
 
 
