@@ -9,25 +9,9 @@
     <title>Tic-Tac-Toe</title>
 </head>
 <body>
-    <div class="float">
-        <div id = "buttons">
-            <div class="player-one-btns"> Choose Your Marker:
-                <button class="xo" id= "x">X</button>
-                <button class="xo" id= "o">O</button>
-            </div>
-            <div class = "choose-opponent"> Choose Opponent:
-                <button id="human" class = "human-bot">Human</button>
-                <button id="bot" class = "human-bot">Bot</button>
-            </div>
-        </div>
-    </div>
     <div id="content">
-        <div id="players">
-            <div id="player-one-wrapper">
-                <h1 class="name">Player One</h1>
-                <div id = "player-one-marker" class = "markers"></div>
-            </div>
-            <!-- <div id = "buttons">
+        <div class="float">
+            <div id = "buttons">
                 <div class="player-one-btns"> Choose Your Marker:
                     <button class="xo" id= "x">X</button>
                     <button class="xo" id= "o">O</button>
@@ -36,29 +20,40 @@
                     <button id="human" class = "human-bot">Human</button>
                     <button id="bot" class = "human-bot">Bot</button>
                 </div>
-            </div> -->
-            <div id="player-two-wrapper">
-                <h1 class="name">Player Two:</h1>
                 <div>
-                    <div id= "player-two-marker" class = "markers"></div>
-                    <div id = "opponent-type"></div>
+                    <button id = "start">Start</button>
                 </div>
             </div>
         </div>
-        <div id="gameboard-wrapper">
-            <div id="gameboard-grid">
-                <div class="gamepiece-square" id="0"></div>
-                <div class="gamepiece-square" id ="1"></div>
-                <div class="gamepiece-square" id="2"></div>
-                <div class="gamepiece-square" id="3"></div>
-                <div class="gamepiece-square" id="4"></div>
-                <div class="gamepiece-square" id="5"></div>
-                <div class="gamepiece-square" id= "6"></div>
-                <div class="gamepiece-square" id= "7"></div>
-                <div class="gamepiece-square" id="8"></div>
+        <div id="game">
+            <div id="players">
+                <div id="player-one-wrapper">
+                    <h1 class="name">Player One</h1>
+                    <div id = "player-one-marker" class = "markers"></div>
+                </div>
+                <div id="player-two-wrapper">
+                    <h1 class="name">Player Two:</h1>
+                    <div>
+                        <div id= "player-two-marker" class = "markers"></div>
+                        <div id = "opponent-type"></div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <button id = "clear">Reset</button>
+            <div id="gameboard-wrapper">
+                <div id="gameboard-grid">
+                    <div class="gamepiece-square" id="0"></div>
+                    <div class="gamepiece-square" id ="1"></div>
+                    <div class="gamepiece-square" id="2"></div>
+                    <div class="gamepiece-square" id="3"></div>
+                    <div class="gamepiece-square" id="4"></div>
+                    <div class="gamepiece-square" id="5"></div>
+                    <div class="gamepiece-square" id= "6"></div>
+                    <div class="gamepiece-square" id= "7"></div>
+                    <div class="gamepiece-square" id="8"></div>
+                </div>
+                <div>
+                    <button id = "clear">Reset</button>
+                </div>
             </div>
         </div>
     </div>

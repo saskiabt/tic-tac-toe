@@ -26,8 +26,6 @@ const gameBoard = (function () {
             document.querySelectorAll('.gamepiece-square').forEach(square => square.textContent = '');
         };
 
-        // document.querySelector("#winner-wrapper").remove();
-        document.querySelector("#buttons").style.display = "flex"; 
         document.querySelector("#buttons > div.player-one-btns").style.display = "flex"; 
         document.querySelector("#buttons > div.choose-opponent").style.display = "flex";
         document.querySelector("#player-two-wrapper > div").style.display = "none";
@@ -40,9 +38,11 @@ const gameBoard = (function () {
         playerOne.marker = '';
         playerTwo.marker = '';
         cpu.marker = ''; 
+        gameIsPaused = false;
 
         if (!currentPlayer) currentPlayer = chooseFirstPlayer(); 
-        // document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click',handleSquareClick));
+        document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
+
      };
    
     document.getElementById('clear').addEventListener('click', reset);
@@ -50,17 +50,16 @@ const gameBoard = (function () {
 
 // Create player objects and populate their properties (marker and isHuman) using DOM buttons; 
 function Player(name, marker, isHuman) {
-    // Function to check if player has selected a marker and an opponent type: 
     const validate = (player) => (player.marker !== '' && player.isHuman !=='')
     return {name, marker, isHuman, validate,}
 }
 
-// Select which marker player one will use 
+// SELECT WHICH MARKER PLAYERS WILL USE 
 const selectMarkers = (event) => {
     document.querySelector("#player-two-wrapper > div").style.display = "flex";
     document.querySelector("#player-one-marker").style.display = "flex"; 
-
     const {target} = event; 
+
     if (target.id === 'x') {
         playerOne.marker = 'X';
         playerTwo.marker = 'O';
@@ -89,7 +88,7 @@ const selectMarkers = (event) => {
 const xo = document.querySelectorAll('.xo'); 
 xo.forEach(button => button.addEventListener('click', selectMarkers)); 
 
-// select whether player two is a bot or human
+// SELECT OPPONENT (BOT OR HUMAN)
 function chooseOpponent(event) {
     document.querySelector("#buttons > div.choose-opponent").style.display = "none";
     document.querySelector("#player-two-wrapper > div").style.display = "flex";
@@ -110,21 +109,22 @@ const humanOrBot = document.querySelectorAll('.human-bot')
 humanOrBot.forEach( button => button.addEventListener('click', chooseOpponent)); 
 
 
-// Register click of game cell and if cell is empty and game is not paused, proceed: 
+// REGISTER CLICK ON GAME BOARD, AND CHECK FOR WIN OR TIE:  
 function handleSquareClick(event) { 
     const {target} = event
     const targetIndex = parseInt(target.id, 10); 
+    if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) gameIsPaused = false; 
 
-   if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) gameIsPaused = false; 
 
     function playRound(target,targetIndex,currentPlayer) {
+     
         const tar = target; 
         board[targetIndex] = currentPlayer.marker; 
         tar.textContent = currentPlayer.marker;
     }
 
+    // Check if current player has 3 in a row of any of the winning combinations: 
     function checkSquaresForWinner(currentPlayer) {
-        // check if board has 3 in a row in any of the winning combinations:
         let isValid = false;
         const winningCombinations = [
             [0,1,2],
@@ -143,16 +143,16 @@ function handleSquareClick(event) {
                 break; 
             } 
         }; 
+
+        if (isValid) gameIsPaused = true;
         return(isValid); 
     }; 
 
     function checkSquaresForTie() {
-        let isTie = false;
-        board.every((elem)=> {
-            if(elem) isTie = true 
-        })
-        console.log(isTie)
-        return isTie; 
+        const isFull = (currentSquare) => currentSquare !== ''
+        const boardIsFull = board.every(isFull); 
+        console.log(boardIsFull); 
+        return boardIsFull;
     }
 
     function handleTurnChange() {
@@ -163,30 +163,42 @@ function handleSquareClick(event) {
         }
     }; 
 
-    const handleWinnerValidation = () => {
+    const handleWinnerValidation = (event) => {
         let winner = currentPlayer;
-        gameIsPaused = true; 
         displayWinner(); 
 
-    function displayWinner() {
-            document.getElementById('buttons').style.display = "none"; 
+        function displayWinner() {
             const winnerWrapper = document.createElement('div'); 
             winnerWrapper.setAttribute('id','winner-wrapper'); 
             document.querySelector("#players").insertBefore(winnerWrapper,document.querySelector("#player-two-wrapper")); 
             winnerWrapper.textContent = `Winner is ${winner.name}`
         }; 
     };
+
+    function stopListening() { 
+        document.querySelectorAll('.gamepiece-square').forEach(square => square.removeEventListener('click', handleSquareClick))
+
+    }
    
     if (board[targetIndex] === '' && !gameIsPaused) {
-        playRound(target,targetIndex,currentPlayer); 
-        if (!checkSquaresForWinner(currentPlayer)) { 
-             handleTurnChange(currentPlayer);
+        playRound(target,targetIndex,currentPlayer,event); 
+        if (!checkSquaresForWinner(currentPlayer) && !checkSquaresForTie()) { 
+                handleTurnChange(currentPlayer);
         } else { 
-              handleWinnerValidation(); 
+                if (gameIsPaused === true) stopListening(); 
+                handleWinnerValidation(); 
         }
     };
 };
 
-document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click',handleSquareClick));
+document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
+    
+// document.querySelectorAll('.gamepiece-square').forEach((square) => {
+//     square.addEventListener('click', (event) => {
+
+//         handleSquareClick(event); 
+            
+//     })
+// });
 
 
