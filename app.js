@@ -154,14 +154,13 @@ function handleSquareClick(event) {
        let fullSquares = board.filter((element)=> {
             if(element !=='') return element; 
        })
-       console.log(fullSquares);
-
+       
        if(fullSquares.length === 9) {
             gameIsPaused = true;
-            displayWinner(); 
+            displayTie(); 
         }; 
 
-        function displayWinner() {
+        function displayTie() {
             const winnerWrapper = document.createElement('div'); 
             winnerWrapper.setAttribute('id','winner-wrapper'); 
             document.querySelector("#players").insertBefore(winnerWrapper,document.querySelector("#player-two-wrapper")); 
