@@ -5,35 +5,18 @@ let gameIsPaused = true;
 const playerOne = Player('Player One','', true);
 const playerTwo = Player('Player Two','', true); 
 const cpu = Player('CPU','', false); 
-let opponent; 
-
-
+let opponent;
 
 const gameBoard = (function () {
-   
     // function to reset the board 
     const reset = () => { 
         for (let i=0; i<board.length; i++) { 
             board[i] = ''
         };
      };
-    
     // reset board on reset button click; 
     const resetButton = document.getElementById('clear'); 
-    resetButton.addEventListener('click', reset)
-
-    const winningCombinations = [
-        [1,2,3],
-        [4,5,6],
-        [7,8,9], 
-        [1,4,7],
-        [2,5,8],
-        [3,6,9],
-        [1,5,9],
-        [3,5,7]
-    ]
-
-
+    resetButton.addEventListener('click', reset);
 })();
 
 // Create player objects and populate their properties (marker and isHuman) using DOM buttons; 
@@ -41,7 +24,7 @@ function Player(name, marker, isHuman) {
     // Function to check if player has selected a marker and an opponent type: 
     const validate = (player) => (player.marker !== '' && player.isHuman !=='')
 
-    return { name, marker, isHuman, validate,}
+    return {name, marker, isHuman, validate,}
 }
 
 Player.prototype.Write = function(elem) {
@@ -101,37 +84,58 @@ humanOrBot.forEach( button => button.addEventListener('click', chooseOpponent));
 function handleSquareClick(event) { 
     const {target} = event
     const targetIndex = parseInt(target.id, 10); 
+    let currentPlayer;
 
-   if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) {
-       gameIsPaused = false; 
-   }; 
+   if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) gameIsPaused = false; 
 
-   function chooseFirstPlayer() { 
-    let currentPlayer; 
     if (playerOne.marker === 'X') {
         currentPlayer = playerOne;
     } else if (playerOne.marker === 'O') {
         currentPlayer = opponent; 
     }
-    return currentPlayer; 
-    };  
-
+   
     if (board[targetIndex] === '' && !gameIsPaused) {
-        let currentPlayer = chooseFirstPlayer(); 
         console.log({currentPlayer})
         playRound(target,targetIndex,currentPlayer); 
-        // handleTurnChange();
+        console.log(checkSquaresForWinner(currentPlayer));
+        if (checkSquaresForWinner(currentPlayer)) {
+             // handleTurnChange();
         // handleWinnerValidation(); 
+        };
     }
-
-     
 }
 
 function playRound(target,targetIndex,currentPlayer) {
+    const tar = target; 
     board[targetIndex] = currentPlayer.marker; 
-    target.textContent = currentPlayer.marker;
+    tar.textContent = currentPlayer.marker;
 }
 
+function checkSquaresForWinner(currentPlayer) {
+    // check if board has 3 in a row in any of the winning combinations:
+    let gameOver; 
+    let isValid = false;
+    console.log(board)
+    const winningCombinations = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8], 
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6]
+    ]
+
+    for (let i=0; i<winningCombinations.length; i++) {
+        if (board[winningCombinations[i][0]] === currentPlayer.marker && board[winningCombinations[i][1]] === currentPlayer.marker && board[winningCombinations[i][2]] === currentPlayer.marker) {
+            isValid = true; 
+            break; 
+        } 
+    }
+    console.log(isValid) 
+    return(isValid); 
+}
 
 // function handleTurnChange() 
 
