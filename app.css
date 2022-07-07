@@ -1,8 +1,9 @@
 /* titleBlue = #004dff */
+/* background color = rgb(31, 56, 119) */
 
 
 body {
-    /* font-family: source-serif-pro,serif; */
+    font-family: source-serif-pro,serif;
     font-weight: 300;
     font-style: normal; ;
     /* background-color: #004dff; */
@@ -14,7 +15,7 @@ body {
     align-items: center;
     position: relative;
 }
-.float {
+#float {
     font-family: source-serif-pro,serif;
     font-weight: 300;
     font-style: normal;
@@ -34,7 +35,7 @@ body {
     display: none;
     flex-direction: column;
     justify-content: center;
-    gap: 20px;
+    /* gap: 20px; */
     margin: 0 auto;
     padding-top: 15vh;
 }
@@ -43,7 +44,7 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 0px 20px;
-    gap: 30px;
+    gap: 40px;
     font-family: "JetBrains Mono",monospace;
     font-weight: 100;
     font-size: 14px; 
@@ -56,36 +57,39 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* padding-top: 10vh; */
+    padding-top: 10vh;
 }
 
 #gameboard-grid {
+    font-family: source-serif-pro, serif;
+    font-weight: 300;
+    font-style: normal;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     width: 50vw;
     max-width: 500px;
     min-width: 200px;
     height: 50vh;
     min-height: 200px;
     max-height: 500px;
-    background-color: #000000ad;
-    color: white;
-    font-family: "JetBrains Mono",monospace;
-    font-weight: 300;
+    background-color: white;
+    padding-bottom: 44px;
+    margin-top: -37px;
 }
     
 .gamepiece-square {
-    border: .5px solid black;
+    border: 0.3px groove rgba(0, 0, 0, 0.17);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding:20px;
-    font-family: vortice-concept,sans-serif;
+    padding: 20px;
+    font-family: "JetBrains Mono";
     font-weight: 400;
-    font-size: 60px; 
+    font-style: normal;
+    font-stretch: expanded;
+    color: rgb(12, 0, 255);
     font-size: 6vh;
-    font-stretch: extra-condensed;
 }
 
 #player-one-wrapper { 
@@ -123,7 +127,7 @@ body {
 }
 
 h1 { 
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 }
@@ -149,6 +153,7 @@ h1 {
 }
 
 .active-player { 
+    display: flex;
     background-color: white;
     color:darkblue; 
 }
@@ -187,7 +192,7 @@ h1 {
   appearance: none;
   background-color: #FCFCFD;
   color: #36395A;
-  box-shadow: rgb(40 52 79 / 56%) 0 2px 4px, rgb(58 145 194 / 30%) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+  box-shadow: rgb(40 52 79 / 56%) 0 2px 4px, rgb(58 145 194 / 30%) 0 7px 13px -3px, #9191aa9e 0 -3px 0 inset;
   height: 7vh;
   width: 18vw;
   padding: 10px;
@@ -195,8 +200,8 @@ h1 {
 }
 
 .xo:focus, .human-bot:focus{
-  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-}
+    transform: scale(0.98);
+    transition: all 0.1s ease-in-out 0s;}
 
 .xo:hover, .human-bot:hover {
     background-color: rgb(31 56 119);
@@ -205,7 +210,6 @@ h1 {
 
 .xo:active , .human-bot:active {
   box-shadow: #D6D6E7 0 3px 7px inset;
-  transform: translateY(2px);
   color: #fcfff9;
   background-color: rgb(31 56 119);
   transform: scale(0.9);
@@ -222,9 +226,6 @@ h1 {
     padding-bottom: 5px;
 }
 
-#gameboard-wrapper > div:nth-child(2) { 
-    padding-top: 20px;
-}
 
 #start {
     font-size: 18px;
@@ -286,6 +287,9 @@ button {
 }
 
 #border {
+    font-family: source-serif-pro, serif;
+    font-weight: 300;
+    font-style: normal;
     border: 2px solid blue;
     width: 72vw;
     min-width: 200px;
@@ -293,7 +297,7 @@ button {
     min-height: 200px;
     z-index: -1;
     position: fixed;
-    bottom: 60px;
+    bottom: 79px;
 }
 
 #title > span {
@@ -301,5 +305,36 @@ button {
 }
 
 #winner-wrapper {
+    font-family: "JetBrains Mono",monospace;
+    font-weight: 300;
+    font-style: normal;
+    color: black;
+    display: flex;
+    justify-content: center;
+    padding: 28px 0px 4px 0px;
+    font-size: 30px;
+    background-color: white;
+}
 
+#clear-restart-wrapper { 
+    font-family: source-serif-pro, serif;
+    font-weight: 300;
+    font-style: normal;
+    gap: 69px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding-top: 20px;
+}
+
+
+
+.reset:focus {
+    transform: scale(0.95);
+    transition: all 1s ease-in-out 0s;}
+
+.reset:hover {
+    background-color: rgb(31 56 119);
+    color: white;
 }

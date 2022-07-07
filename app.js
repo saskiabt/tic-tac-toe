@@ -30,8 +30,6 @@ const gamePlay = (function () {
 
     // SELECT WHICH MARKER PLAYERS WILL USE 
     const selectMarkers = (event) => {
-        document.querySelector("#player-two-wrapper > div").style.display = "flex";
-        document.querySelector("#player-one-marker").style.display = "flex"; 
         const {target} = event; 
 
         if (target.id === 'x') {
@@ -51,17 +49,12 @@ const gamePlay = (function () {
 
     // SELECT OPPONENT (BOT OR HUMAN)
     function chooseOpponent(event) {
-        document.querySelector("#player-two-wrapper > div").style.display = "flex";
         const {target} = event; 
-        const opponentType = document.querySelector("#opponent-type"); 
-
         if (target === document.getElementById('bot')) {
             opponent = cpu; 
-            opponentType.textContent = "Bot"
             document.querySelector("#player-two-wrapper > h1").textContent = "CPU's Move"
         } else if (target === document.getElementById('human')) {
             opponent = playerTwo; 
-            opponentType.textContent = "Human"; 
             document.querySelector("#player-two-wrapper > h1").textContent = "Player Two's Move"
         }; 
 
@@ -80,13 +73,10 @@ const gamePlay = (function () {
             document.querySelector("#player-one-wrapper > h1").className = "active-player"; 
             document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");
 
-
         } else if (currentPlayer === playerOne) { 
             document.querySelector("#player-one-wrapper > h1").classList.remove("active-player"); 
             document.querySelector("#player-two-wrapper > h1").className = "active-player";
         }
-
-
         // HELPER FUNCTIONS // 
             // PLAY ROUND BY WRITING IN BOX W MARKER 
             function playRound(target,targetIndex,currentPlayer) {
@@ -136,8 +126,9 @@ const gamePlay = (function () {
                 function displayTie() {
                     const winnerWrapper = document.createElement('div'); 
                     winnerWrapper.setAttribute('id','winner-wrapper'); 
-                    document.querySelector("#players").insertBefore(winnerWrapper,document.querySelector("#player-two-wrapper")); 
+                    document.querySelector("#game").insertBefore(winnerWrapper,document.querySelector("#players")); 
                     winnerWrapper.textContent = `Tie!`
+                    hideElement(document.querySelector("#players")); 
                 }
             }
 
@@ -158,22 +149,19 @@ const gamePlay = (function () {
                 function displayWinner() {
                     const winnerWrapper = document.createElement('div'); 
                     winnerWrapper.setAttribute('id','winner-wrapper'); 
-                    document.querySelector("#players").insertBefore(winnerWrapper,document.querySelector("#player-two-wrapper")); 
-                    winnerWrapper.textContent = `Winner is ${winner.name}`;
+                    document.querySelector("#game").insertBefore(winnerWrapper,document.querySelector("#players")); 
+                    winnerWrapper.textContent = `${winner.name} Wins!`;
                     document.querySelector("#player-one-wrapper > h1").classList.remove("active-player"); 
                     document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");
-                    document.querySelector("#player-one-wrapper").style.display = "none";
-                    document.querySelector("#player-two-wrapper").style.display = "none";
+                    hideElement(document.querySelector("#players")); 
                 }; 
             };
 
-            // REMOVE EVENT LISTENER FROM GAMEBOARD IF GAME IS PAUSED
             function stopListening() { 
                 document.querySelectorAll('.gamepiece-square').forEach(square => square.removeEventListener('click', handleSquareClick))
-
-                
             }
-    // GAMEPLAY: 
+
+        // GAMEPLAY: 
         if (board[targetIndex] === '' && !gameIsPaused) {
             playRound(target,targetIndex,currentPlayer,event); 
             if (!checkSquaresForWinner(currentPlayer) && !checkSquaresForTie()) { 
@@ -189,64 +177,73 @@ const gamePlay = (function () {
 
     // RESET BUTTON
     const reset = () => { 
+        gameIsPaused = false;
+
         for (let i=0; i<board.length; i++) { 
             board[i] = ''
             document.querySelectorAll('.gamepiece-square').forEach(square => square.textContent = '');
         };
 
-        document.querySelector("#choose-marker").style.display = "flex"; 
-        document.querySelector("#choose-opponent").style.display = "flex";
-        document.querySelector("#player-two-wrapper > div").style.display = "none";
-        document.querySelector("#player-one-marker").style.display = "none"; 
-        document.querySelector("#buttons > div:nth-child(3)").style.display = 'flex';
-        document.getElementById('game').style.display = 'none';
-        document.querySelector("#content > div.float").style.display = 'flex';
-        document.querySelector("#player-one-wrapper").style.display = "flex";
-        document.querySelector("#player-two-wrapper").style.display = "flex";
-        document.querySelector('body').style.backgroundColor = "white"
-
+        hideElement(document.getElementById('game'));
+        showElement(document.querySelector("#choose-marker"));
+        showElement(document.querySelector("#choose-opponent"));
+        showElement(document.querySelector("#buttons > div:nth-child(3)"));
+        showElement(document.querySelector("#float")); 
+        showElement(document.querySelector("#players")); 
+        
         currentPlayer = null;
         opponent = null;
         playerOne.marker = '';
         playerTwo.marker = '';
         cpu.marker = ''; 
-        gameIsPaused = false;
+
+        document.querySelector('body').style.backgroundColor = "white"
+        document.querySelectorAll('.cb').forEach((button) => {
+            button.style.backgroundColor = 'white';
+            button.style.color = "rgb(31, 56, 119)"
+        });
 
         if (!currentPlayer) currentPlayer = chooseFirstPlayer(); 
         document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
         document.querySelector("#winner-wrapper").remove();
     };
-    
     document.getElementById('clear').addEventListener('click', reset);
 
-    const removeFloat = (function () {
-        document.querySelector("#start").addEventListener('click', (event) => {
-            if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) {
-                document.querySelector("#content > div.float").style.display = 'none'
-                gameIsPaused = false; 
 
-                document.querySelector("#buttons > div:nth-child(3)").style.display = 'none';
-                document.getElementById('game').style.display = 'flex'; 
-                // document.querySelector('body').style.backgroundColor = "#004dff"
-
-                highlightActivePlayer();
-            }
-        }); 
-    })();
-
-    function highlightActivePlayer() {
-        if (currentPlayer === playerOne) {
-            document.querySelector("#player-one-wrapper > h1").className = "active-player"; 
-            document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");
-
-
-        } else if (currentPlayer === playerTwo || currentPlayer === cpu) { 
-            document.querySelector("#player-one-wrapper > h1").classList.remove("active-player"); 
-            document.querySelector("#player-two-wrapper > h1").className = "active-player";
-        }
+    // Helper functions to hide and show DOM elements
+    const showElement = (elem) => {
+        elem.style.display = "flex"; 
     }
 
+    const hideElement = (elem) => {
+        elem.style.display = "none"
+    }
     
+    const removeFloat = function () {
+        if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) {
+            gameIsPaused = false; 
+            hideElement(document.querySelector("#float")); 
+            hideElement(document.querySelector("#buttons > div:nth-child(3)")); 
+            showElement(document.getElementById('game')); 
+            showActivePlayer();
+        }; 
+
+        function showActivePlayer() {
+            if (currentPlayer === playerOne) {
+                document.querySelector("#player-one-wrapper > h1").className = "active-player"; 
+                document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");
+    
+            } else if (currentPlayer === playerTwo || currentPlayer === cpu) { 
+                document.querySelector("#player-one-wrapper > h1").classList.remove("active-player"); 
+                document.querySelector("#player-two-wrapper > h1").className = "active-player";
+            };
+        };
+    
+    };
+    document.querySelector('#start').addEventListener('click', removeFloat); 
+
+    
+
 })();
 
 const controlDisplay = (function () {
@@ -281,8 +278,6 @@ const controlDisplay = (function () {
                     tar.style.color = 'white'
                     document.querySelector("#human").style.backgroundColor = 'white'; 
                     document.querySelector("#human").style.color = 'rgb(31 56 119)'; 
-
-
                     break;
                 default:
                     break; 
