@@ -218,6 +218,7 @@ const gamePlay = (function () {
        
         const winnerWrapper = document.getElementById('winner-wrapper')
         winnerWrapper.classList.remove('winner-wrapper-showing'); 
+        hideElement(winnerWrapper);
     };
     document.getElementById('clear').addEventListener('click', reset);
 
