@@ -12,6 +12,8 @@ const gamePlay = (function () {
     let currentPlayer = null;
     let opponent;
 
+    // const titleBlue = style.color('#004dff');
+
     // Select Current Player:
     function chooseFirstPlayer() {
         if (playerOne.marker === 'X') {
@@ -38,24 +40,11 @@ const gamePlay = (function () {
             playerOne.marker = 'X';
             playerTwo.marker = 'O';
             cpu.marker = 'O';
-            displayMarkers();
         } else if (target.id === 'o') {
             playerOne.marker = 'O';
             playerTwo.marker = 'X';
             cpu.marker = 'X';
-            displayMarkers();
         }
-
-        function displayMarkers() {      
-            document.querySelector("#buttons > div.player-one-btns").style.display = "none";
-
-            const markerDisplayOne = document.querySelector("#player-one-marker");
-            markerDisplayOne.textContent = `Marker = ${playerOne.marker}`; 
-
-            const markerDisplayTwo = document.querySelector("#player-two-marker");
-            markerDisplayTwo.textContent = `Marker = ${playerTwo.marker}`
-        };
-
         if (!currentPlayer) currentPlayer = chooseFirstPlayer(); 
     };
 
@@ -64,7 +53,7 @@ const gamePlay = (function () {
 
     // SELECT OPPONENT (BOT OR HUMAN)
     function chooseOpponent(event) {
-        document.querySelector("#buttons > div.choose-opponent").style.display = "none";
+        // document.querySelector("#buttons > div.choose-opponent").style.display = "none";
         document.querySelector("#player-two-wrapper > div").style.display = "flex";
         const {target} = event; 
         const opponentType = document.querySelector("#opponent-type"); 
@@ -72,9 +61,11 @@ const gamePlay = (function () {
         if (target === document.getElementById('bot')) {
             opponent = cpu; 
             opponentType.textContent = "Opponent = Bot"
+            document.querySelector("#player-two-wrapper > h1").textContent = "CPU"
         } else if (target === document.getElementById('human')) {
             opponent = playerTwo; 
             opponentType.textContent = "Opponent = Human"; 
+            document.querySelector("#player-two-wrapper > h1").textContent = "Player Two"
         }; 
 
         currentPlayer = chooseFirstPlayer(); 
@@ -88,6 +79,18 @@ const gamePlay = (function () {
         const {target} = event
         const targetIndex = parseInt(target.id, 10); 
         // if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) gameIsPaused = false; 
+
+        // console.log(currentPlayer)
+        if (currentPlayer === playerTwo || currentPlayer === cpu) {
+            document.querySelector("#player-one-wrapper > h1").className = "active-player"; 
+            document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");
+
+
+        } else if (currentPlayer === playerOne) { 
+            document.querySelector("#player-one-wrapper > h1").classList.remove("active-player"); 
+            document.querySelector("#player-two-wrapper > h1").className = "active-player";
+        }
+
 
         // HELPER FUNCTIONS // 
             // PLAY ROUND BY WRITING IN BOX W MARKER 
@@ -161,7 +164,11 @@ const gamePlay = (function () {
                     const winnerWrapper = document.createElement('div'); 
                     winnerWrapper.setAttribute('id','winner-wrapper'); 
                     document.querySelector("#players").insertBefore(winnerWrapper,document.querySelector("#player-two-wrapper")); 
-                    winnerWrapper.textContent = `Winner is ${winner.name}`
+                    winnerWrapper.textContent = `Winner is ${winner.name}`;
+                    document.querySelector("#player-one-wrapper > h1").classList.remove("active-player"); 
+                    document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");
+                    document.querySelector("#player-one-wrapper").style.display = "none";
+                    document.querySelector("#player-two-wrapper").style.display = "none";
                 }; 
             };
 
@@ -191,15 +198,15 @@ const gamePlay = (function () {
             document.querySelectorAll('.gamepiece-square').forEach(square => square.textContent = '');
         };
 
-        document.querySelector("#buttons > div.player-one-btns").style.display = "flex"; 
-        document.querySelector("#buttons > div.choose-opponent").style.display = "flex";
+        document.querySelector("#choose-marker").style.display = "flex"; 
+        document.querySelector("#choose-opponent").style.display = "flex";
         document.querySelector("#player-two-wrapper > div").style.display = "none";
         document.querySelector("#player-one-marker").style.display = "none"; 
         document.querySelector("#buttons > div:nth-child(3)").style.display = 'flex';
-        document.getElementById('game').style.display = 'none'
-       
-      
-
+        document.getElementById('game').style.display = 'none';
+        document.querySelector("#content > div.float").style.display = 'flex';
+        document.querySelector("#player-one-wrapper").style.display = "flex";
+        document.querySelector("#player-two-wrapper").style.display = "flex";
         currentPlayer = null;
         opponent = null;
         playerOne.marker = '';
@@ -217,13 +224,29 @@ const gamePlay = (function () {
     const removeFloat = (function () {
         document.querySelector("#start").addEventListener('click', (event) => {
             if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) {
-                document.getElementById('game').style.display = 'flex'
+                document.querySelector("#content > div.float").style.display = 'none'
                 gameIsPaused = false; 
                 document.querySelector("#buttons > div:nth-child(3)").style.display = 'none';
+                // console.log({currentPlayer}); 
 
+                document.getElementById('game').style.display = 'flex'; 
+                highlightActivePlayer();
             }
         }); 
     })();
+
+    function highlightActivePlayer() {
+        if (currentPlayer === playerOne) {
+            document.querySelector("#player-one-wrapper > h1").className = "active-player"; 
+            document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");
+
+
+        } else if (currentPlayer === playerTwo || currentPlayer === cpu) { 
+            document.querySelector("#player-one-wrapper > h1").classList.remove("active-player"); 
+            document.querySelector("#player-two-wrapper > h1").className = "active-player";
+        }
+    }
+
     
 })();
 
