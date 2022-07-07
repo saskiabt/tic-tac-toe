@@ -53,7 +53,6 @@ const gamePlay = (function () {
 
     // SELECT OPPONENT (BOT OR HUMAN)
     function chooseOpponent(event) {
-        // document.querySelector("#buttons > div.choose-opponent").style.display = "none";
         document.querySelector("#player-two-wrapper > div").style.display = "flex";
         const {target} = event; 
         const opponentType = document.querySelector("#opponent-type"); 
@@ -78,9 +77,7 @@ const gamePlay = (function () {
     function handleSquareClick(event) { 
         const {target} = event
         const targetIndex = parseInt(target.id, 10); 
-        // if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) gameIsPaused = false; 
-
-        // console.log(currentPlayer)
+   
         if (currentPlayer === playerTwo || currentPlayer === cpu) {
             document.querySelector("#player-one-wrapper > h1").className = "active-player"; 
             document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");

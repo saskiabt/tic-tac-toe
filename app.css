@@ -169,7 +169,7 @@ h1 {
 
 
 
-.xo, .human-bot { 
+/* .xo, .human-bot { 
     font-family: source-serif-pro,serif;
     font-weight: 500;
     font-style: normal;
@@ -177,26 +177,66 @@ h1 {
     border-radius: 10px;
     padding: 12px 50px;
     max-width: 23px;
-    box-shadow:
-        5.7px 8.3px 36.2px -74px rgba(0, 0, 0, 0.055),
+    box-shadow: 5.7px 8.3px 36.2px -74px rgba(0, 0, 0, 0.055),
         8.9px 13px 64px -74px rgba(0, 0, 0, 0.063),
         10.9px 15.8px 84.1px -74px rgba(0, 0, 0, 0.068),
         12.1px 17.7px 97.3px -74px rgba(0, 0, 0, 0.072),
         13.1px 19.1px 105px -74px rgba(0, 0, 0, 0.078),
         14.3px 20.9px 110.4px -74px rgba(0, 0, 0, 0.086),
         16.5px 24.1px 121.1px -74px rgba(0, 0, 0, 0.097),
-        24px 35px 177px -74px rgba(0, 0, 0, 0.11)
-    ;
+        24px 35px 177px -74px rgba(0, 0, 0, 0.11);
     border: none;
     justify-content: center;
     text-align: center;
     display: flex;
-    background-color: #fad6e3;
-    background: radial-gradient( 100% 100% at 100% 0%,    #f7e5ff 0%
-    #ff5e9870 100%); 
- 
-    ;
-    color: white;
+    background-color: #c1fe68;
+    color: #011408;
+} */
+/* CSS */
+.xo, .human-bot {
+  align-items: center;
+  appearance: none;
+  background-color: #FCFCFD;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395A;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+}
+
+.xo:focus, .human-bot:focus{
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+.xo:hover, .human-bot:hover{
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.xo:active , .human-bot:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(2px);
+}
 
 }
 
