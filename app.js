@@ -12,8 +12,6 @@ const gamePlay = (function () {
     let currentPlayer = null;
     let opponent;
 
-    // const titleBlue = style.color('#004dff');
-
     // Select Current Player:
     function chooseFirstPlayer() {
         if (playerOne.marker === 'X') {
@@ -59,12 +57,12 @@ const gamePlay = (function () {
 
         if (target === document.getElementById('bot')) {
             opponent = cpu; 
-            opponentType.textContent = "Opponent = Bot"
-            document.querySelector("#player-two-wrapper > h1").textContent = "CPU"
+            opponentType.textContent = "Bot"
+            document.querySelector("#player-two-wrapper > h1").textContent = "CPU's Move"
         } else if (target === document.getElementById('human')) {
             opponent = playerTwo; 
-            opponentType.textContent = "Opponent = Human"; 
-            document.querySelector("#player-two-wrapper > h1").textContent = "Player Two"
+            opponentType.textContent = "Human"; 
+            document.querySelector("#player-two-wrapper > h1").textContent = "Player Two's Move"
         }; 
 
         currentPlayer = chooseFirstPlayer(); 
@@ -173,6 +171,7 @@ const gamePlay = (function () {
             function stopListening() { 
                 document.querySelectorAll('.gamepiece-square').forEach(square => square.removeEventListener('click', handleSquareClick))
 
+                
             }
     // GAMEPLAY: 
         if (board[targetIndex] === '' && !gameIsPaused) {
@@ -204,6 +203,8 @@ const gamePlay = (function () {
         document.querySelector("#content > div.float").style.display = 'flex';
         document.querySelector("#player-one-wrapper").style.display = "flex";
         document.querySelector("#player-two-wrapper").style.display = "flex";
+        document.querySelector('body').style.backgroundColor = "white"
+
         currentPlayer = null;
         opponent = null;
         playerOne.marker = '';
@@ -223,10 +224,11 @@ const gamePlay = (function () {
             if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) {
                 document.querySelector("#content > div.float").style.display = 'none'
                 gameIsPaused = false; 
-                document.querySelector("#buttons > div:nth-child(3)").style.display = 'none';
-                // console.log({currentPlayer}); 
 
+                document.querySelector("#buttons > div:nth-child(3)").style.display = 'none';
                 document.getElementById('game').style.display = 'flex'; 
+                // document.querySelector('body').style.backgroundColor = "#004dff"
+
                 highlightActivePlayer();
             }
         }); 
@@ -247,5 +249,45 @@ const gamePlay = (function () {
     
 })();
 
+const controlDisplay = (function () {
+    document.querySelectorAll('.cb').forEach((button) => {
+        button.addEventListener('click', (event) => {
+            const tar = event.target
+            const tarID = event.target.id; 
+            switch(tarID) {
+                case 'x':
+                    tar.style.backgroundColor = 'rgb(31 56 119)'; 
+                    tar.style.color = 'white'
+                    document.querySelector("#o").style.backgroundColor = 'white'; 
+                    document.querySelector("#o").style.color = 'rgb(31 56 119)'; 
 
+                    break;
+                case 'o':
+                    tar.style.backgroundColor = 'rgb(31 56 119)'
+                    tar.style.color = 'white'
+                    document.querySelector("#x").style.backgroundColor = 'white';
+                    document.querySelector("#x").style.color = 'rgb(31 56 119)'; 
+
+                    break;
+                case 'human': 
+                    tar.style.backgroundColor = 'rgb(31 56 119)'; 
+                    tar.style.color = 'white'
+                    document.querySelector("#bot").style.backgroundColor = 'white'; 
+                    document.querySelector("#bot").style.color = 'rgb(31 56 119)'; 
+
+                    break;
+                case 'bot':
+                    tar.style.backgroundColor = 'rgb(31 56 119)'; 
+                    tar.style.color = 'white'
+                    document.querySelector("#human").style.backgroundColor = 'white'; 
+                    document.querySelector("#human").style.color = 'rgb(31 56 119)'; 
+
+
+                    break;
+                default:
+                    break; 
+            } return false;
+        })
+    })
+})();
 

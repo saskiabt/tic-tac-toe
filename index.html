@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="app.css"> 
     <link rel="stylesheet" href="https://use.typekit.net/lqp0iqw.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,300;0,400;0,600;1,800&display=swap" rel="stylesheet">
 
     <title>Tic-Tac-Toe</title>
 </head>
@@ -13,20 +16,20 @@
     <div id="content">
         <div class="float">
             <div id="title-wrapper">
-                <div id="title">Tic <br>Tac <br>☠ Toe ☠</div>
-                <div id="signature">built by Saskia Binder</div>
+                <div id="title"><span>Tic <br> Tac <br> Toe </div>
+                <!-- <div id="signature">built by Saskia Binder</div> -->
             </div>
             <div id = "buttons">
-                <div id="choose-marker" class = "choice"> Choose Marker:
+                <div id="choose-marker" class = "choice"> 
                     <div class = "button-box">
-                        <button class="xo" id= "x">X</button>
-                        <button class="xo" id= "o">O</button>
+                        <button class="xo cb" id= "x">X</button>
+                        <button class="xo cb" id= "o">O</button>
                     </div>
                 </div>
-                <div id = "choose-opponent" class = "choice"> Choose Opponent:
+                <div id = "choose-opponent" class = "choice"> Opponent:
                     <div class = "button-box">
-                        <button id="human" class = "human-bot">Human</button>
-                        <button id="bot" class = "human-bot">Bot</button>
+                        <button id="human" class = "human-bot cb">Human</button>
+                        <button id="bot" class = "human-bot cb">Bot</button>
                     </div>
                 </div>
                 <div id = "start-wrapper">
@@ -34,14 +37,15 @@
                 </div>
             </div>
         </div>
+        <div id="border"></div>
         <div id="game">
             <div id="players">
                 <div id="player-one-wrapper">
-                    <h1 class="name">Player One</h1>
+                    <h1 class="name">Player One's Move</h1>
                     <div id = "player-one-marker" class = "markers"></div>
                 </div>
                 <div id="player-two-wrapper">
-                    <h1 id ="player-two-name">Player Two:</h1>
+                    <h1 id ="player-two-name">Player Two's Move:</h1>
                     <div>
                         <div id= "player-two-marker" class = "markers"></div>
                         <div id = "opponent-type"></div>
@@ -60,7 +64,7 @@
                     <div class="gamepiece-square" id= "7"></div>
                     <div class="gamepiece-square" id="8"></div>
                 </div>
-                <div>
+                <div id = "clear-restart-wrapper">
                     <button id = "clear">Restart</button>
                     <button id="restart">Clear Board</button>
                 </div>
