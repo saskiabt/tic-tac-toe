@@ -304,7 +304,7 @@ button {
     background-color: white;
 }
 
-#winner-wrapper {
+.winner-wrapper-showing {
     font-family: "JetBrains Mono",monospace;
     font-weight: 300;
     font-style: normal;

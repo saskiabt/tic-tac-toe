@@ -22,6 +22,17 @@ const gamePlay = (function () {
         return currentPlayer;
     }; 
 
+    function showActivePlayer() {
+        if (currentPlayer === playerOne) {
+            document.querySelector("#player-one-wrapper > h1").className = "active-player"; 
+            document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");
+
+        } else if (currentPlayer === playerTwo || currentPlayer === cpu) { 
+            document.querySelector("#player-one-wrapper > h1").classList.remove("active-player"); 
+            document.querySelector("#player-two-wrapper > h1").className = "active-player";
+        };
+    };
+
     // Create player objects and populate their properties (marker and isHuman) using DOM buttons; 
     function Player(name, marker, isHuman) {
         const validate = (player) => (player.marker !== '' && player.isHuman !=='')
@@ -124,11 +135,11 @@ const gamePlay = (function () {
                 }; 
 
                 function displayTie() {
-                    const winnerWrapper = document.createElement('div'); 
-                    winnerWrapper.setAttribute('id','winner-wrapper'); 
-                    document.querySelector("#game").insertBefore(winnerWrapper,document.querySelector("#players")); 
-                    winnerWrapper.textContent = `Tie!`
                     hideElement(document.querySelector("#players")); 
+                    const winnerWrapper = document.getElementById('winner-wrapper'); 
+                    showElement(winnerWrapper);
+                    winnerWrapper.className = "winner-wrapper-showing";
+                    winnerWrapper.textContent = `Tie!`
                 }
             }
 
@@ -147,13 +158,12 @@ const gamePlay = (function () {
                 displayWinner(); 
 
                 function displayWinner() {
-                    const winnerWrapper = document.createElement('div'); 
-                    winnerWrapper.setAttribute('id','winner-wrapper'); 
-                    document.querySelector("#game").insertBefore(winnerWrapper,document.querySelector("#players")); 
-                    winnerWrapper.textContent = `${winner.name} Wins!`;
-                    document.querySelector("#player-one-wrapper > h1").classList.remove("active-player"); 
-                    document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");
                     hideElement(document.querySelector("#players")); 
+                    const winnerWrapper = document.getElementById('winner-wrapper'); 
+                    showElement(winnerWrapper);
+                    winnerWrapper.className = "winner-wrapper-showing";
+                    winnerWrapper.textContent = `${winner.name} Wins!`;
+   
                 }; 
             };
 
@@ -187,7 +197,7 @@ const gamePlay = (function () {
         hideElement(document.getElementById('game'));
         showElement(document.querySelector("#choose-marker"));
         showElement(document.querySelector("#choose-opponent"));
-        showElement(document.querySelector("#buttons > div:nth-child(3)"));
+        showElement(document.querySelector("#start-wrapper"));
         showElement(document.querySelector("#float")); 
         showElement(document.querySelector("#players")); 
         
@@ -205,10 +215,29 @@ const gamePlay = (function () {
 
         if (!currentPlayer) currentPlayer = chooseFirstPlayer(); 
         document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
-        document.querySelector("#winner-wrapper").remove();
+       
+        const winnerWrapper = document.getElementById('winner-wrapper')
+        winnerWrapper.classList.remove('winner-wrapper-showing'); 
     };
     document.getElementById('clear').addEventListener('click', reset);
 
+    const clearBoard = () => {
+        const winnerWrapper = document.getElementById('winner-wrapper')
+        winnerWrapper.classList.remove('winner-wrapper-showing'); 
+        hideElement(winnerWrapper)
+        currentPlayer = chooseFirstPlayer(); 
+        showActivePlayer();
+        showElement(document.querySelector("#players")); 
+        gameIsPaused = false;
+        for (let i=0; i<board.length; i++) { 
+            board[i] = ''
+            document.querySelectorAll('.gamepiece-square').forEach(square => square.textContent = '');
+        };
+
+        // document.querySelector("#winner-wrapper").remove();
+        document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
+    }
+    document.querySelector("#restart").addEventListener('click', clearBoard); 
 
     // Helper functions to hide and show DOM elements
     const showElement = (elem) => {
@@ -227,23 +256,10 @@ const gamePlay = (function () {
             showElement(document.getElementById('game')); 
             showActivePlayer();
         }; 
-
-        function showActivePlayer() {
-            if (currentPlayer === playerOne) {
-                document.querySelector("#player-one-wrapper > h1").className = "active-player"; 
-                document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");
-    
-            } else if (currentPlayer === playerTwo || currentPlayer === cpu) { 
-                document.querySelector("#player-one-wrapper > h1").classList.remove("active-player"); 
-                document.querySelector("#player-two-wrapper > h1").className = "active-player";
-            };
-        };
     
     };
+
     document.querySelector('#start').addEventListener('click', removeFloat); 
-
-    
-
 })();
 
 const controlDisplay = (function () {
