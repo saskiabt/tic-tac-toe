@@ -87,7 +87,8 @@ const gamePlay = (function () {
     function handleSquareClick(event) { 
         const {target} = event
         const targetIndex = parseInt(target.id, 10); 
-        if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) gameIsPaused = false; 
+        // if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) gameIsPaused = false; 
+
         // HELPER FUNCTIONS // 
             // PLAY ROUND BY WRITING IN BOX W MARKER 
             function playRound(target,targetIndex,currentPlayer) {
@@ -180,7 +181,7 @@ const gamePlay = (function () {
             }
         };
     };
-
+    
     document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
 
     // RESET BUTTON
@@ -194,7 +195,11 @@ const gamePlay = (function () {
         document.querySelector("#buttons > div.choose-opponent").style.display = "flex";
         document.querySelector("#player-two-wrapper > div").style.display = "none";
         document.querySelector("#player-one-marker").style.display = "none"; 
-        document.querySelector("#winner-wrapper").remove();
+        document.querySelector("#buttons > div:nth-child(3)").style.display = 'flex';
+        document.getElementById('game').style.display = 'none'
+       
+      
+
         currentPlayer = null;
         opponent = null;
         playerOne.marker = '';
@@ -204,10 +209,23 @@ const gamePlay = (function () {
 
         if (!currentPlayer) currentPlayer = chooseFirstPlayer(); 
         document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
+        document.querySelector("#winner-wrapper").remove();
     };
     
     document.getElementById('clear').addEventListener('click', reset);
 
+    const removeFloat = (function () {
+        document.querySelector("#start").addEventListener('click', (event) => {
+            if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) {
+                document.getElementById('game').style.display = 'flex'
+                gameIsPaused = false; 
+                document.querySelector("#buttons > div:nth-child(3)").style.display = 'none';
+
+            }
+        }); 
+    })();
+    
 })();
+
 
 
