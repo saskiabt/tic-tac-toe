@@ -27,11 +27,11 @@
  #buttons {
      padding-top: 1vw;
  }
- 
+/*  
  .xo, .human-bot {
      font-size: 4.3vw;
 
- }
+ } */
 
  #sig {
      font-size: 7vw;
@@ -52,4 +52,17 @@
  .xo,.human-bot {
      width: 30vw;
      font-size: 6.5vw;
+ }
+
+ #float {
+     margin-top: 0vh;
+ }
+
+ #start {
+     position: static;
+     bottom: none;
+ }
+
+ #start-wrapper {
+     padding-top: 6vh;
  }

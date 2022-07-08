@@ -1,3 +1,6 @@
+/* titleBlue = #004dff */ */
+/* background color = rgb(31, 56, 119) */
+
 
 body {
     font-family: source-serif-pro,serif;
@@ -157,7 +160,7 @@ h1 {
     align-self: center;
     gap: 10px;   
     font-size: 16px;
-    padding-top: 1vw;
+    padding-top: 5vh;
 }
 
 .active-button {
@@ -382,7 +385,9 @@ button {
     padding-top: 44px;
     padding-bottom: 10px;
 }
-
-/* .reset {
-    position: fixed;
-} */
+ 
+@media only screen and (max-height: 800px) and (min-height:720px) {
+    #buttons {
+      padding-top: 1vh;
+    }
+  }

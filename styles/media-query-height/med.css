@@ -1,0 +1,41 @@
+#header {
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+#clear-restart-wrapper {
+    padding-top: 0;
+}
+
+#game {
+    padding-top: 0;
+}
+
+h1 {
+    font-size: 4.5vh;
+}
+
+#content {
+    overflow: auto;
+}
+
+#title {
+    font-size: 10vh;
+}
+
+#start {
+    padding: 10px 12vw;
+    font-size: 3vh;
+}
+
+.gamepiece-square {
+    font-size: 6vh;;
+ }
+
+ #gameboard-grid {
+    height: 60vh;
+}
+
+.xo, .human-bot { 
+    width: 14vh;
+}

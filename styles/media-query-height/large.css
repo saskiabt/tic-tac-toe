@@ -1,0 +1,36 @@
+/* (max-height:720px) and (min-height:600px)' */
+
+#title {
+    font-size: 12vh;
+}
+
+#buttons {
+    padding-top: 0vh;
+}
+
+.xo, .human-bot {
+    font-size: 3vh;
+    /* height: 6vh; */
+}
+
+#float {
+    margin-top: -3vh;
+}
+
+#start {
+    position: static;
+    bottom: none;
+}
+
+#sig {
+    font-size: 4vh;
+}
+
+#clear-restart-wrapper {
+    padding-top: 20px;
+}
+
+#header {
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
