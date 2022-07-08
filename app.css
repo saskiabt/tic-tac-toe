@@ -1,4 +1,4 @@
-titleBlue = #004dff */
+/* titleBlue = #004dff */ */
 /* background color = rgb(31, 56, 119) */
 
 
@@ -213,7 +213,7 @@ h1 {
 
 #sig > span:hover {
     text-decoration: underline;
-    text-decoration-style: wavy;
+    text-decoration-style: solid;
     text-decoration-thickness: 2px;
     letter-spacing:3px;
 }
@@ -333,6 +333,7 @@ button {
     min-width: 200px;
     height: 70vh;
     min-height: 505px;
+    max-height:600px;
     z-index: -1;
     position: fixed;
     bottom: 79px;
@@ -384,14 +385,4 @@ button {
     padding-top: 44px;
     padding-bottom: 10px;
 }
-
-/* #x {
-    position: fixed;
-    left: 183px;
-}
-
-#o {
-    position: fixed;
-    left: 183px;
-}
-
+ 
