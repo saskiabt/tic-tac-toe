@@ -1,3 +1,55 @@
-#border {
-    display: none;
-}
+
+
+#title {
+    font-size: 90px;
+ }
+ 
+ 
+ #clear-restart-wrapper {
+     gap:20px;
+     padding:10px
+ }
+ 
+ #border {
+     display: none;
+ }
+ 
+ 
+ .reset {
+     height: 45px;
+     font-size: 4vw;
+ }
+ 
+ #gameboard-grid {
+     width: 80vw;
+ }
+ 
+ #buttons {
+     padding-top: 1vw;
+ }
+ 
+ .xo, .human-bot {
+     font-size: 4.3vw;
+
+ }
+
+ #sig {
+     font-size: 7vw;
+ }
+
+ h1 {
+     font-size: 7vw;
+ }
+
+ #title {
+     font-size: 27vw;
+ }
+
+ .gamepiece-square {
+    font-size: 15vw;;
+ }
+
+ .xo,.human-bot {
+     width: 30vw;
+     font-size: 6.5vw;
+ }

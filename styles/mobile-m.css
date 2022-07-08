@@ -1,3 +1,36 @@
+/* width between 320 and 381 */
+
+
+#title {
+   font-size: 90px;
+}
+
+
+#clear-restart-wrapper {
+    gap:20px;
+    padding:10px
+}
+
 #border {
     display: none;
 }
+
+
+.reset {
+    height: 45px;
+    font-size: 3.5vw;
+}
+
+#gameboard-grid {
+    width: 75vw;
+}
+
+#buttons {
+    padding-top: 1vw;
+}
+
+.xo, .human-bot {
+    font-size: 4.3vw;
+    width: 25vw;
+}
+

@@ -1,4 +1,4 @@
-/* (max-width:535px) and (min-width:425px)' href='./styles/tablet.css'> */ 
+/* (max-width:535px) and (min-width:381px)' href='./styles/tablet.css'> */ 
 
 
 #clear-restart-wrapper {
@@ -10,9 +10,6 @@
     display: none;
 }
 
-/* button {
-    height: 40px;
-} */
 
 .reset {
     height: 45px;
@@ -29,4 +26,6 @@
 
 .xo, .human-bot {
     font-size: 4.3vw;
+    width: 25vw;
 }
+

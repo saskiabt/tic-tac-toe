@@ -1,3 +1,7 @@
 #border {
     display: none;
 }
+
+#players {
+    font-size: 12px;
+}
