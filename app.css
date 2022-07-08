@@ -57,7 +57,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 10vh;
+    padding-top: 9vh;
 }
 
 #gameboard-grid {
