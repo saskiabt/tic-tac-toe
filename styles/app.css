@@ -195,6 +195,7 @@ h1 {
     align-items: center;
     text-align: center;
 }
+
 #sig { 
     font-family: source-serif-pro,serif;
     font-weight: 400;
@@ -212,6 +213,10 @@ h1 {
     font-weight: 400;
     font-size: normal;
     cursor: grab;
+    /* opacity: .8; */
+    transition: ease-in-out .5s;
+    color: #004dff;
+
 }
 
 #sig > span:hover {
@@ -219,7 +224,7 @@ h1 {
     text-decoration-style: solid;
     text-decoration-thickness: 2px;
     letter-spacing:3px;
-    color: darkblue;
+    /* opacity: 1; */
 }
 
 
