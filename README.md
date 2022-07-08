@@ -17,4 +17,4 @@ Functionality and specs:
 
 - Original UI and design. 
 
-- Media queries to resize game for mobile, tablet and laptop.
+- Media queries to resize game for mobile, tablet and laptop. Should work on phone and any sized window, with consistent styling. I think I spent the greatest amount of time adjusting the styling, but I learned a lot about responsive design through experimenting with different device sizes on devTools.
