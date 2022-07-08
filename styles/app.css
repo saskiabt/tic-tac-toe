@@ -175,7 +175,7 @@ h1 {
     align-self: center;
     gap: 10px;   
     font-size: 16px;
-    padding-top: 5vh;
+    padding-top: 2vh;
 }
 
 .active-button {
@@ -311,8 +311,7 @@ h1 {
 }
 
 .choice { 
-    font-size: 14px;
-    letter-spacing: 2px;
+    font-size: 3vh;
 }
 
 
@@ -414,3 +413,7 @@ button {
       padding-top: 1vh;
     }
   }
+
+.choice { 
+    font-size: 22px;
+}
