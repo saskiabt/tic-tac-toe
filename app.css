@@ -1,4 +1,4 @@
-/* titleBlue = #004dff */
+titleBlue = #004dff */
 /* background color = rgb(31, 56, 119) */
 
 
@@ -27,7 +27,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 3vh;
+    margin-top: -1vh;
     display: flex;
 }
 
@@ -38,7 +38,7 @@ body {
     flex-direction: column;
     justify-content: center;
     margin: 0 auto;
-    padding-top: 3vh;
+    padding-top: 2vh;
     display: none;
 }
 
@@ -75,7 +75,7 @@ body {
     min-height: 200px;
     max-height: 500px;
     background-color: white;
-    padding-bottom: 44px;
+    padding-bottom: 29px;
     margin-top: -37px;
 }
     
@@ -89,9 +89,22 @@ body {
     font-weight: 400;
     font-style: normal;
     font-stretch: expanded;
-    color: #078fff;
-    font-size: 6vh;
+    color: #f5f9fd;
+    font-size: 8vh;
     border-radius: 10px;
+    background-color: #f5f9fe;
+    /* text-shadow: #003cff 0px 2px 2px; */
+    text-shadow: 4px 4px 0px #0200ff, 2px 3px 0px #0027ff, 5px 3px 0px #80859d00, 2px 2px 0px #4b135e52;
+    -webkit-text-fill-color: #c4eaff;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #332f79;
+}
+
+.gamepiece-square:hover {
+    background-color: #8fc1ff3d;
+}
+
+.gamepiece-square:active {
     background-color: #f5f9fe;
 }
 
@@ -145,7 +158,8 @@ h1 {
     flex-direction: column;
     align-self: center;
     gap: 10px;   
-    font-size: 16px
+    font-size: 16px;
+    padding-top: 5vh;
 }
 
 .active-button {
@@ -163,7 +177,7 @@ h1 {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding-bottom: 30px;
+    /* padding-bottom: 30px; */
     font-family: vortice-concept,sans-serif;
     font-weight: 400;
     color: #004dff;
@@ -197,6 +211,10 @@ h1 {
 
 #sig > span:hover {
     text-decoration: underline;
+    text-decoration-style: double;
+    text-decoration-thickness: 2px;
+    /* text-decoration-color: #36395A; */
+
 }
 
 
@@ -249,6 +267,8 @@ h1 {
     background-color: #004dff;
     color: white;
     box-shadow: rgb(45 35 66 / 40%) 0 2px 4px, rgb(45 35 66 / 30%) 0 7px 13px -3px, #677e9e -1px 1px 0px 1px;
+    position: fixed;
+    bottom: 58px;
 }
 
 #start:hover {
@@ -260,7 +280,7 @@ h1 {
 }
 
 #start-wrapper { 
-    padding-top: 30px;
+    padding-top: 6vh;
 }
 
 .choice { 
@@ -308,7 +328,7 @@ button {
     width: 72vw;
     min-width: 200px;
     height: 70vh;
-    min-height: 200px;
+    min-height: 505px;
     z-index: -1;
     position: fixed;
     bottom: 79px;
@@ -339,7 +359,7 @@ button {
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    padding-top: 20px;
+    /* padding-top: 20px; */
 }
 
 
@@ -360,3 +380,14 @@ button {
     padding-top: 44px;
     padding-bottom: 10px;
 }
+
+/* #x {
+    position: fixed;
+    left: 183px;
+}
+
+#o {
+    position: fixed;
+    left: 183px;
+}
+

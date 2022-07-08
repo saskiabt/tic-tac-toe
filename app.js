@@ -243,16 +243,18 @@ const gamePlay = (function () {
     }
     
     const removeFloat = function () {
-        if (playerOne.validate(playerOne) && playerTwo.validate(playerTwo)) {
+        if (!playerOne.validate(playerOne) && !playerTwo.validate(playerTwo)) {
+            document.querySelector('#start').disabled = true; 
+        } else {
+            document.querySelector('#start').disabled = false; 
             gameIsPaused = false; 
             hideElement(document.querySelector("#float")); 
             hideElement(document.querySelector("#buttons > div:nth-child(3)")); 
             showElement(document.getElementById('game')); 
             showActivePlayer();
-        }; 
-    
+        }
     };
-
+    
     document.querySelector('#start').addEventListener('click', removeFloat); 
 })();
 
