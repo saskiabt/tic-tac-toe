@@ -99,8 +99,22 @@ body {
     -webkit-text-fill-color: #c4eaff;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: #5750c9a6;
-    cursor:crosshair
+    cursor:crosshair;
 }
+
+.fadeIn {
+    animation: fadeIn 3s;
+    -webkit-animation: fadeIn 3s;
+    -moz-animation: fadeIn 3s;
+    -o-animation: fadeIn 3s;
+    -ms-animation: fadeIn 3s;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}; 
+    100% {opacity: 1;}
+}
+
 
 .gamepiece-square:hover {
     background-color: #8fc1ff3d;
