@@ -211,9 +211,10 @@ h1 {
 
 #sig > span:hover {
     text-decoration: underline;
-    text-decoration-style: double;
+    text-decoration-style: wavy;
     text-decoration-thickness: 2px;
     /* text-decoration-color: #36395A; */
+    letter-spacing:3px;
 
 }
 
