@@ -1,0 +1,32 @@
+/* (max-width:535px) and (min-width:425px)' href='./styles/tablet.css'> */ 
+
+
+#clear-restart-wrapper {
+    gap:20px;
+    padding:10px
+}
+
+#border {
+    display: none;
+}
+
+/* button {
+    height: 40px;
+} */
+
+.reset {
+    height: 45px;
+    font-size: 3.5vw;
+}
+
+#gameboard-grid {
+    width: 75vw;
+}
+
+#buttons {
+    padding-top: 1vw;
+}
+
+.xo, .human-bot {
+    font-size: 4.3vw;
+}
