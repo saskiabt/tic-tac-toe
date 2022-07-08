@@ -80,14 +80,6 @@ const gamePlay = (function () {
         const {target} = event
         const targetIndex = parseInt(target.id, 10); 
    
-        if (currentPlayer === playerTwo || currentPlayer === cpu) {
-            document.querySelector("#player-one-wrapper > h1").className = "active-player"; 
-            document.querySelector("#player-two-wrapper > h1").classList.remove("active-player");
-
-        } else if (currentPlayer === playerOne) { 
-            document.querySelector("#player-one-wrapper > h1").classList.remove("active-player"); 
-            document.querySelector("#player-two-wrapper > h1").className = "active-player";
-        }
         // HELPER FUNCTIONS // 
             // PLAY ROUND BY WRITING IN BOX W MARKER 
             function playRound(target,targetIndex,currentPlayer) {
@@ -150,6 +142,7 @@ const gamePlay = (function () {
                 } else if (currentPlayer === playerTwo || currentPlayer === cpu) { 
                     currentPlayer = playerOne; 
                 }
+                showActivePlayer();
             }; 
 
             // DISPLAY THE WINNER 

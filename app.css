@@ -13,7 +13,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
+    /* height: 100vh; */
+    /* position: relative; */
 }
 
 #float {
@@ -21,21 +22,24 @@ body {
     font-weight: 300;
     font-style: normal;
     margin: 0 auto;
-    display: flex;
     height: 80vh;
     width: 80vw;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 7vh;
+    margin-top: 3vh;
+    display: flex;
 }
 
 #game { 
-    display: none;
+    font-family: source-serif-pro,serif;
+    font-weight: 300;
+    font-style: normal;
     flex-direction: column;
     justify-content: center;
     margin: 0 auto;
-    padding-top: 9vh;
+    padding-top: 3vh;
+    display: none;
 }
 
 #players { 
@@ -76,17 +80,20 @@ body {
 }
     
 .gamepiece-square {
-    border: 0.3px groove rgba(0, 0, 0, 0.17);
+    border: 4.300000000000001px solid white;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    font-family: "JetBrains Mono";
+    font-family: bubblegum-pop-vanilla,sans-serif;
     font-weight: 400;
     font-style: normal;
     font-stretch: expanded;
     color: rgb(12, 0, 255);
     font-size: 6vh;
+    border-radius: 10px;
+    background-color: #fffa9d;
+    /* -webkit-text-stroke: 2px #6fb4ee; */
 }
 
 #player-one-wrapper { 
@@ -127,6 +134,7 @@ h1 {
     display: none;
     justify-content: center;
     align-items: center;
+    font-weight: 300;
 }
 
 .human-bot:active {
@@ -186,6 +194,10 @@ h1 {
     font-family: amador,sans-serif;
     font-weight: 400;
     font-size: normal;
+}
+
+#sig > span:hover {
+    text-decoration: underline;
 }
 
 
@@ -311,7 +323,7 @@ button {
     font-family: "JetBrains Mono",monospace;
     font-weight: 300;
     font-style: normal;
-    color: black;
+    color:#0c00ff;
     display: flex;
     justify-content: center;
     padding: 28px 0px 4px 0px;
@@ -340,4 +352,12 @@ button {
 .reset:hover {
     background-color: rgb(31 56 119);
     color: white;
+}
+
+#header {
+    font-family: source-serif-pro,serif;
+    font-weight: 300;
+    font-style: normal;
+    padding-top: 44px;
+    padding-bottom: 10px;
 }
