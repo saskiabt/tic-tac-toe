@@ -350,7 +350,7 @@ button {
     font-family: source-serif-pro, serif;
     font-weight: 300;
     font-style: normal;
-    border: 2px solid blue;
+    border: 3px solid blue;
     width: 72vw;
     min-width: 200px;
     height: 70vh;
@@ -359,6 +359,38 @@ button {
     z-index: -1;
     position: fixed;
     bottom: 79px;
+
+    /*animations */
+    animation-name: switchColorAnimation;
+    animation-duration: 4s;
+    animation-timing-function: ease-in;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction:alternate;
+    animation-fill-mode: none;
+    animation-play-state: running;
+}
+
+@keyframes switchColorAnimation {
+    0% {
+        border: 3px solid rgb(6, 72, 206)
+    }
+
+    25% {
+        border: 3px solid rgb(20, 95, 243)
+    }
+
+    50% {
+        border: 3px solid rgb(117, 163, 254)
+    }
+
+    75% {
+        border: 3px solid rgb(138, 183, 255)
+    }
+
+    100% {
+        border: 3px solid rgb(156, 189, 255)
+    }
 }
 
 #title > span {
