@@ -99,6 +99,7 @@ body {
     -webkit-text-fill-color: #c4eaff;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: #5750c9a6;
+    cursor:crosshair
 }
 
 .gamepiece-square:hover {
@@ -203,12 +204,14 @@ h1 {
     color:#004dff;
     padding-top: 10px;
     z-index: 999;
+    
 }
 
 #sig > span {
     font-family: amador,sans-serif;
     font-weight: 400;
     font-size: normal;
+    cursor: grab;
 }
 
 #sig > span:hover {
@@ -216,6 +219,7 @@ h1 {
     text-decoration-style: solid;
     text-decoration-thickness: 2px;
     letter-spacing:3px;
+    color: darkblue;
 }
 
 

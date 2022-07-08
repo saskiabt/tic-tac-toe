@@ -39,3 +39,7 @@ h1 {
 .xo, .human-bot { 
     width: 14vh;
 }
+
+#players {
+    font-size: 10px;
+}

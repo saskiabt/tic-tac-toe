@@ -1,5 +1,5 @@
 # tic-tac-toe
-browser tic-tac-toe game in JS, written using modules and factory functions. 
+Browser tic-tac-toe game in JS, written using modules and factory functions. 
 
 Functionality and specs: 
 
@@ -15,4 +15,6 @@ Functionality and specs:
 
 - Clear board to reset game board without clearing players or markers. 
 
--Original UI and design. 
+- Original UI and design. 
+
+- Media queries to resize game for mobile, tablet and laptop.

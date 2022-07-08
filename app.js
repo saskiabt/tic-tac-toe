@@ -297,6 +297,8 @@ const controlDisplay = (function () {
         })
     })
 
-    
+    document.querySelector("#sig > span").addEventListener('click', () => {
+        window.open('https://github.com/saskiabt/tic-tac-toe','_blank')
+    })
 })();
 
