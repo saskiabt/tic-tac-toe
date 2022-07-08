@@ -108,10 +108,11 @@ const gamePlay = (function () {
                         board[winningCombinations[i][2]] === currentPlayer.marker) {
                         isValid = true; 
                         break; 
-                    } 
+                    }; 
                 }; 
 
                 if (isValid) gameIsPaused = true;
+            
                 return(isValid); 
             }; 
 
