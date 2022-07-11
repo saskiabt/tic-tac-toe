@@ -120,9 +120,9 @@ body {
     background-color: #8fc1ff3d;
 }
 
-.gamepiece-square:active {
+/* .gamepiece-square:active {
     background-color: #f5f9fe;
-}
+} */
 
 #player-one-wrapper { 
     display: flex;
