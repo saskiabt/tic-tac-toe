@@ -17,15 +17,6 @@ function Player(name, marker, isHuman) {
 //  FUNCTIONS TO CONTROL THE GAME    //
 const gamePlay = (function () {
 
-    // GLOBAL VARIABLES // 
-    // let board = ['', '', '', '', '', '', '', '', '',];
-    // let gameIsPaused = true;
-    // const playerOne = Player('Player One','', true);
-    // const playerTwo = Player('Player Two','', true); 
-    // const cpu = Player('CPU','', false); 
-    // let currentPlayer = null;
-    // let opponent;
-
     // Select Current Player:
     function chooseFirstPlayer() {
         if (playerOne.marker === 'X') {
@@ -47,12 +38,7 @@ const gamePlay = (function () {
         };
     };
 
-    // Create player objects and populate their properties (marker and isHuman) using DOM buttons; 
-    // function Player(name, marker, isHuman) {
-    //     const validate = (player) => (player.marker !== '' && player.isHuman !=='')
-    //     return {name, marker, isHuman, validate,}
-    // }
-
+   
     // SELECT WHICH MARKER PLAYERS WILL USE 
     const selectMarkers = (event) => {
         const {target} = event; 
@@ -78,9 +64,11 @@ const gamePlay = (function () {
         if (target === document.getElementById('bot')) {
             opponent = cpu; 
             document.querySelector("#player-two-wrapper > h1").textContent = "CPU's Move"
+            stopListening(); 
         } else if (target === document.getElementById('human')) {
             opponent = playerTwo; 
             document.querySelector("#player-two-wrapper > h1").textContent = "Player Two's Move"
+            startListening(); 
         }; 
 
         currentPlayer = chooseFirstPlayer(); 
@@ -88,6 +76,25 @@ const gamePlay = (function () {
     const humanOrBot = document.querySelectorAll('.human-bot') 
     humanOrBot.forEach( button => button.addEventListener('click', chooseOpponent)); 
 
+
+    const startGame = function () {
+        if (!playerOne.validate(playerOne) && !playerTwo.validate(playerTwo)) {
+            document.querySelector('#start').disabled = true; 
+        } else {
+            document.querySelector('#start').disabled = false; 
+            gameIsPaused = false; 
+            hideElement(document.querySelector("#float")); 
+            hideElement(document.querySelector("#buttons > div:nth-child(3)")); 
+            showElement(document.getElementById('game')); 
+            showActivePlayer();
+            if (currentPlayer === cpu) {
+                setTimeout(computerPlay,500); 
+            }
+            if (currentPlayer === playerOne || currentPlayer === playerTwo) startListening(); 
+        }
+    };
+    
+    document.querySelector('#start').addEventListener('click', startGame); 
 
     // CHECK IF EITHER PLAYER HAS WON
     function checkSquaresForWinner(currentPlayer) {
@@ -141,13 +148,15 @@ const gamePlay = (function () {
     function handleTurnChange() {
         if (currentPlayer === playerOne) {
             currentPlayer = opponent; 
-            if (opponent === cpu) stopListening(); 
+            if (opponent === cpu) {
+                stopListening(); 
+                setTimeout(computerPlay,500); 
+
+            }
         } else if (currentPlayer === playerTwo || currentPlayer === cpu) { 
             currentPlayer = playerOne; 
             if (opponent === cpu) startListening(); 
         }
-
-
         showActivePlayer();
     }; 
 
@@ -166,9 +175,15 @@ const gamePlay = (function () {
         }; 
     };
 
+    // START AND STOP LISTENING TO GAMEBOARD EVENT CLICKS 
     function stopListening() { 
         isListening = false;
         document.querySelectorAll('.gamepiece-square').forEach(square => square.removeEventListener('click', handleSquareClick))
+    }
+
+    function startListening() {
+        isListening = true; 
+        document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick))
     }
 
 
@@ -185,82 +200,6 @@ const gamePlay = (function () {
                 tar.textContent = currentPlayer.marker;
             }
 
-            // // CHECK IF EITHER PLAYER HAS WON
-            // function checkSquaresForWinner(currentPlayer) {
-            //     let isValid = false;
-            //     const winningCombinations = [
-            //         [0,1,2],
-            //         [3,4,5],
-            //         [6,7,8], 
-            //         [0,3,6],
-            //         [1,4,7],
-            //         [2,5,8],
-            //         [0,4,8],
-            //         [2,4,6]
-            //     ]; 
-
-            //     for (let i=0; i<winningCombinations.length; i++) {
-            //         if (board[winningCombinations[i][0]] === currentPlayer.marker && 
-            //             board[winningCombinations[i][1]] === currentPlayer.marker && 
-            //             board[winningCombinations[i][2]] === currentPlayer.marker) {
-            //             isValid = true; 
-            //             break; 
-            //         }; 
-            //     }; 
-
-            //     if (isValid) gameIsPaused = true;
-            
-            //     return(isValid); 
-            // }; 
-
-            // // CHECK IF GAME IS A TIE
-            // function checkSquaresForTie() {
-            //     let fullSquares = board.filter((element)=> {
-            //             if(element !=='') return element; 
-            //     })
-
-            //     if(fullSquares.length === 9) {
-            //         gameIsPaused = true;
-            //         displayTie(); 
-            //     }; 
-
-            //     function displayTie() {
-            //         hideElement(document.querySelector("#players")); 
-            //         const winnerWrapper = document.getElementById('winner-wrapper'); 
-            //         showElement(winnerWrapper);
-            //         winnerWrapper.className = "winner-wrapper-showing";
-            //         winnerWrapper.textContent = `Tie!`
-            //     }
-            // }
-
-            // // SWITCH CURRENT PLAYER IF NO WINNER OR TIE
-            // function handleTurnChange() {
-            //     if (currentPlayer === playerOne) {
-            //         currentPlayer = opponent; 
-            //     } else if (currentPlayer === playerTwo || currentPlayer === cpu) { 
-            //         currentPlayer = playerOne; 
-            //     }
-            //     showActivePlayer();
-            // }; 
-
-            // // DISPLAY THE WINNER 
-            // const handleWinnerValidation = () => {
-            //     let winner = currentPlayer;
-            //     displayWinner(); 
-
-            //     function displayWinner() {
-            //         hideElement(document.querySelector("#players")); 
-            //         const winnerWrapper = document.getElementById('winner-wrapper'); 
-            //         showElement(winnerWrapper);
-            //         winnerWrapper.className = "winner-wrapper-showing";
-            //         winnerWrapper.textContent = `${winner.name} Wins!`;
-   
-            //     }; 
-            // };
-
-            // function stopListening() { 
-            //     document.querySelectorAll('.gamepiece-square').forEach(square => square.removeEventListener('click', handleSquareClick))
-            // }
 
         // GAMEPLAY: 
         if (board[targetIndex] === '' && !gameIsPaused) {
@@ -274,10 +213,23 @@ const gamePlay = (function () {
         };
     };
   
-    function startListening() {
-        isListening = true; 
-        document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick))
+// the problem here is with filter. i need to return an array with the index numbers of each of the array elements that are empty and then pick a random element from that array 
+    const cpuTakeTurn = () => {
+        const emptySquares = []
+        for (let i=0; i<board.length; i++) {
+            if (board[i] === '') emptySquares.push(i); 
+        }
+        // const emptySquares = board.filter(element => element === ''); 
+        console.log(emptySquares);
+        const index = emptySquares[Math.floor(Math.random()*emptySquares.length)]; 
+        console.log(index)
+
+        board[index] = currentPlayer.marker; 
+        document.getElementById(index).textContent = currentPlayer.marker;
+        console.log(emptySquares);
+
     }
+  
     
     const computerPlay = () => {
         stopListening(); 
@@ -285,23 +237,12 @@ const gamePlay = (function () {
 
         if (!checkSquaresForWinner(currentPlayer) && !checkSquaresForTie()) { 
             handleTurnChange(currentPlayer);
+            startListening(); 
         } else { 
                 if (gameIsPaused === true) stopListening(); 
                 handleWinnerValidation(); 
         }
-
     };
-
-    const cpuTakeTurn = () => {
-        const emptySquares = board.filter(element => element === ''); 
-        const index = Math.floor(Math.random()*emptySquares.length+1); 
-
-        board[index] = currentPlayer.marker; 
-        document.getElementById(index).textContent = currentPlayer.marker;
-    }
-
-
-    // if (currentPlayer === playerOne || currentPlayer === playerTwo) startListening(); 
 
     // RESET BUTTON
     const reset = () => { 
@@ -332,8 +273,7 @@ const gamePlay = (function () {
         });
 
         if (!currentPlayer) currentPlayer = chooseFirstPlayer(); 
-        document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
-       
+        startListening();       
         const winnerWrapper = document.getElementById('winner-wrapper')
         winnerWrapper.classList.remove('winner-wrapper-showing'); 
         hideElement(winnerWrapper);
@@ -353,7 +293,10 @@ const gamePlay = (function () {
             document.querySelectorAll('.gamepiece-square').forEach(square => square.textContent = '');
         };
 
-        document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
+        if (currentPlayer === cpu) {
+            setTimeout(computerPlay,500); 
+        }
+        if (currentPlayer === playerOne || currentPlayer === playerTwo) startListening(); ;
     }
     document.querySelector("#restart").addEventListener('click', clearBoard); 
 
@@ -365,24 +308,7 @@ const gamePlay = (function () {
     const hideElement = (elem) => {
         elem.style.display = "none"
     }
-    
-    const startGame = function () {
-        if (!playerOne.validate(playerOne) && !playerTwo.validate(playerTwo)) {
-            document.querySelector('#start').disabled = true; 
-        } else {
-            document.querySelector('#start').disabled = false; 
-            gameIsPaused = false; 
-            hideElement(document.querySelector("#float")); 
-            hideElement(document.querySelector("#buttons > div:nth-child(3)")); 
-            showElement(document.getElementById('game')); 
-            showActivePlayer();
-            if (currentPlayer === cpu) computerPlay(); 
-            if (currentPlayer === playerOne || currentPlayer === playerTwo) startListening(); 
 
-        }
-    };
-    
-    document.querySelector('#start').addEventListener('click', startGame); 
 })();
 
 const controlDisplay = (function () {
