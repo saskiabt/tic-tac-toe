@@ -1,16 +1,30 @@
 "use strict";
+let currentPlayer = null;
+let opponent;
+let board = ['', '', '', '', '', '', '', '', '',];
+let gameIsPaused = true;
+const playerOne = Player('Player One','', true);
+const playerTwo = Player('Player Two','', true); 
+const cpu = Player('CPU','', false); 
+let isListening; 
+
+function Player(name, marker, isHuman) {
+    const validate = (player) => (player.marker !== '' && player.isHuman !=='')
+    return {name, marker, isHuman, validate,}
+}
+
 
 //  FUNCTIONS TO CONTROL THE GAME    //
 const gamePlay = (function () {
 
     // GLOBAL VARIABLES // 
-    let board = ['', '', '', '', '', '', '', '', '',];
-    let gameIsPaused = true;
-    const playerOne = Player('Player One','', true);
-    const playerTwo = Player('Player Two','', true); 
-    const cpu = Player('CPU','', false); 
-    let currentPlayer = null;
-    let opponent;
+    // let board = ['', '', '', '', '', '', '', '', '',];
+    // let gameIsPaused = true;
+    // const playerOne = Player('Player One','', true);
+    // const playerTwo = Player('Player Two','', true); 
+    // const cpu = Player('CPU','', false); 
+    // let currentPlayer = null;
+    // let opponent;
 
     // Select Current Player:
     function chooseFirstPlayer() {
@@ -34,10 +48,10 @@ const gamePlay = (function () {
     };
 
     // Create player objects and populate their properties (marker and isHuman) using DOM buttons; 
-    function Player(name, marker, isHuman) {
-        const validate = (player) => (player.marker !== '' && player.isHuman !=='')
-        return {name, marker, isHuman, validate,}
-    }
+    // function Player(name, marker, isHuman) {
+    //     const validate = (player) => (player.marker !== '' && player.isHuman !=='')
+    //     return {name, marker, isHuman, validate,}
+    // }
 
     // SELECT WHICH MARKER PLAYERS WILL USE 
     const selectMarkers = (event) => {
@@ -75,6 +89,89 @@ const gamePlay = (function () {
     humanOrBot.forEach( button => button.addEventListener('click', chooseOpponent)); 
 
 
+    // CHECK IF EITHER PLAYER HAS WON
+    function checkSquaresForWinner(currentPlayer) {
+        let isValid = false;
+        const winningCombinations = [
+            [0,1,2],
+            [3,4,5],
+            [6,7,8], 
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [2,4,6]
+        ]; 
+
+        for (let i=0; i<winningCombinations.length; i++) {
+            if (board[winningCombinations[i][0]] === currentPlayer.marker && 
+                board[winningCombinations[i][1]] === currentPlayer.marker && 
+                board[winningCombinations[i][2]] === currentPlayer.marker) {
+                isValid = true; 
+                break; 
+            }; 
+        }; 
+
+        if (isValid) gameIsPaused = true;
+    
+        return(isValid); 
+    }; 
+
+    // CHECK IF GAME IS A TIE
+    function checkSquaresForTie() {
+        let fullSquares = board.filter((element)=> {
+                if(element !=='') return element; 
+        })
+
+        if(fullSquares.length === 9) {
+            gameIsPaused = true;
+            displayTie(); 
+        }; 
+
+        function displayTie() {
+            hideElement(document.querySelector("#players")); 
+            const winnerWrapper = document.getElementById('winner-wrapper'); 
+            showElement(winnerWrapper);
+            winnerWrapper.className = "winner-wrapper-showing";
+            winnerWrapper.textContent = `Tie!`
+        }
+    }
+
+    // SWITCH CURRENT PLAYER IF NO WINNER OR TIE
+    function handleTurnChange() {
+        if (currentPlayer === playerOne) {
+            currentPlayer = opponent; 
+            if (opponent === cpu) stopListening(); 
+        } else if (currentPlayer === playerTwo || currentPlayer === cpu) { 
+            currentPlayer = playerOne; 
+            if (opponent === cpu) startListening(); 
+        }
+
+
+        showActivePlayer();
+    }; 
+
+    // DISPLAY THE WINNER 
+    const handleWinnerValidation = () => {
+        let winner = currentPlayer;
+        displayWinner(); 
+
+        function displayWinner() {
+            hideElement(document.querySelector("#players")); 
+            const winnerWrapper = document.getElementById('winner-wrapper'); 
+            showElement(winnerWrapper);
+            winnerWrapper.className = "winner-wrapper-showing";
+            winnerWrapper.textContent = `${winner.name} Wins!`;
+
+        }; 
+    };
+
+    function stopListening() { 
+        isListening = false;
+        document.querySelectorAll('.gamepiece-square').forEach(square => square.removeEventListener('click', handleSquareClick))
+    }
+
+
     // REGISTER CLICK ON GAME BOARD, AND CHECK FOR WIN OR TIE:    //  
     function handleSquareClick(event) { 
         const {target} = event
@@ -88,82 +185,82 @@ const gamePlay = (function () {
                 tar.textContent = currentPlayer.marker;
             }
 
-            // CHECK IF EITHER PLAYER HAS WON
-            function checkSquaresForWinner(currentPlayer) {
-                let isValid = false;
-                const winningCombinations = [
-                    [0,1,2],
-                    [3,4,5],
-                    [6,7,8], 
-                    [0,3,6],
-                    [1,4,7],
-                    [2,5,8],
-                    [0,4,8],
-                    [2,4,6]
-                ]; 
+            // // CHECK IF EITHER PLAYER HAS WON
+            // function checkSquaresForWinner(currentPlayer) {
+            //     let isValid = false;
+            //     const winningCombinations = [
+            //         [0,1,2],
+            //         [3,4,5],
+            //         [6,7,8], 
+            //         [0,3,6],
+            //         [1,4,7],
+            //         [2,5,8],
+            //         [0,4,8],
+            //         [2,4,6]
+            //     ]; 
 
-                for (let i=0; i<winningCombinations.length; i++) {
-                    if (board[winningCombinations[i][0]] === currentPlayer.marker && 
-                        board[winningCombinations[i][1]] === currentPlayer.marker && 
-                        board[winningCombinations[i][2]] === currentPlayer.marker) {
-                        isValid = true; 
-                        break; 
-                    }; 
-                }; 
+            //     for (let i=0; i<winningCombinations.length; i++) {
+            //         if (board[winningCombinations[i][0]] === currentPlayer.marker && 
+            //             board[winningCombinations[i][1]] === currentPlayer.marker && 
+            //             board[winningCombinations[i][2]] === currentPlayer.marker) {
+            //             isValid = true; 
+            //             break; 
+            //         }; 
+            //     }; 
 
-                if (isValid) gameIsPaused = true;
+            //     if (isValid) gameIsPaused = true;
             
-                return(isValid); 
-            }; 
+            //     return(isValid); 
+            // }; 
 
-            // CHECK IF GAME IS A TIE
-            function checkSquaresForTie() {
-                let fullSquares = board.filter((element)=> {
-                        if(element !=='') return element; 
-                })
+            // // CHECK IF GAME IS A TIE
+            // function checkSquaresForTie() {
+            //     let fullSquares = board.filter((element)=> {
+            //             if(element !=='') return element; 
+            //     })
 
-                if(fullSquares.length === 9) {
-                    gameIsPaused = true;
-                    displayTie(); 
-                }; 
+            //     if(fullSquares.length === 9) {
+            //         gameIsPaused = true;
+            //         displayTie(); 
+            //     }; 
 
-                function displayTie() {
-                    hideElement(document.querySelector("#players")); 
-                    const winnerWrapper = document.getElementById('winner-wrapper'); 
-                    showElement(winnerWrapper);
-                    winnerWrapper.className = "winner-wrapper-showing";
-                    winnerWrapper.textContent = `Tie!`
-                }
-            }
+            //     function displayTie() {
+            //         hideElement(document.querySelector("#players")); 
+            //         const winnerWrapper = document.getElementById('winner-wrapper'); 
+            //         showElement(winnerWrapper);
+            //         winnerWrapper.className = "winner-wrapper-showing";
+            //         winnerWrapper.textContent = `Tie!`
+            //     }
+            // }
 
-            // SWITCH CURRENT PLAYER IF NO WINNER OR TIE
-            function handleTurnChange() {
-                if (currentPlayer === playerOne) {
-                    currentPlayer = opponent; 
-                } else if (currentPlayer === playerTwo || currentPlayer === cpu) { 
-                    currentPlayer = playerOne; 
-                }
-                showActivePlayer();
-            }; 
+            // // SWITCH CURRENT PLAYER IF NO WINNER OR TIE
+            // function handleTurnChange() {
+            //     if (currentPlayer === playerOne) {
+            //         currentPlayer = opponent; 
+            //     } else if (currentPlayer === playerTwo || currentPlayer === cpu) { 
+            //         currentPlayer = playerOne; 
+            //     }
+            //     showActivePlayer();
+            // }; 
 
-            // DISPLAY THE WINNER 
-            const handleWinnerValidation = () => {
-                let winner = currentPlayer;
-                displayWinner(); 
+            // // DISPLAY THE WINNER 
+            // const handleWinnerValidation = () => {
+            //     let winner = currentPlayer;
+            //     displayWinner(); 
 
-                function displayWinner() {
-                    hideElement(document.querySelector("#players")); 
-                    const winnerWrapper = document.getElementById('winner-wrapper'); 
-                    showElement(winnerWrapper);
-                    winnerWrapper.className = "winner-wrapper-showing";
-                    winnerWrapper.textContent = `${winner.name} Wins!`;
+            //     function displayWinner() {
+            //         hideElement(document.querySelector("#players")); 
+            //         const winnerWrapper = document.getElementById('winner-wrapper'); 
+            //         showElement(winnerWrapper);
+            //         winnerWrapper.className = "winner-wrapper-showing";
+            //         winnerWrapper.textContent = `${winner.name} Wins!`;
    
-                }; 
-            };
+            //     }; 
+            // };
 
-            function stopListening() { 
-                document.querySelectorAll('.gamepiece-square').forEach(square => square.removeEventListener('click', handleSquareClick))
-            }
+            // function stopListening() { 
+            //     document.querySelectorAll('.gamepiece-square').forEach(square => square.removeEventListener('click', handleSquareClick))
+            // }
 
         // GAMEPLAY: 
         if (board[targetIndex] === '' && !gameIsPaused) {
@@ -176,8 +273,35 @@ const gamePlay = (function () {
             }
         };
     };
+  
+    function startListening() {
+        isListening = true; 
+        document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick))
+    }
     
-    document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
+    const computerPlay = () => {
+        stopListening(); 
+        cpuTakeTurn(); 
+
+        if (!checkSquaresForWinner(currentPlayer) && !checkSquaresForTie()) { 
+            handleTurnChange(currentPlayer);
+        } else { 
+                if (gameIsPaused === true) stopListening(); 
+                handleWinnerValidation(); 
+        }
+
+    };
+
+    const cpuTakeTurn = () => {
+        const emptySquares = board.filter(element => element === ''); 
+        const index = Math.floor(Math.random()*emptySquares.length+1); 
+
+        board[index] = currentPlayer.marker; 
+        document.getElementById(index).textContent = currentPlayer.marker;
+    }
+
+
+    // if (currentPlayer === playerOne || currentPlayer === playerTwo) startListening(); 
 
     // RESET BUTTON
     const reset = () => { 
@@ -229,7 +353,6 @@ const gamePlay = (function () {
             document.querySelectorAll('.gamepiece-square').forEach(square => square.textContent = '');
         };
 
-        // document.querySelector("#winner-wrapper").remove();
         document.querySelectorAll('.gamepiece-square').forEach(square => square.addEventListener('click', handleSquareClick));
     }
     document.querySelector("#restart").addEventListener('click', clearBoard); 
@@ -243,7 +366,7 @@ const gamePlay = (function () {
         elem.style.display = "none"
     }
     
-    const removeFloat = function () {
+    const startGame = function () {
         if (!playerOne.validate(playerOne) && !playerTwo.validate(playerTwo)) {
             document.querySelector('#start').disabled = true; 
         } else {
@@ -253,10 +376,13 @@ const gamePlay = (function () {
             hideElement(document.querySelector("#buttons > div:nth-child(3)")); 
             showElement(document.getElementById('game')); 
             showActivePlayer();
+            if (currentPlayer === cpu) computerPlay(); 
+            if (currentPlayer === playerOne || currentPlayer === playerTwo) startListening(); 
+
         }
     };
     
-    document.querySelector('#start').addEventListener('click', removeFloat); 
+    document.querySelector('#start').addEventListener('click', startGame); 
 })();
 
 const controlDisplay = (function () {
@@ -302,4 +428,13 @@ const controlDisplay = (function () {
         window.open('https://github.com/saskiabt/tic-tac-toe','_blank')
     })
 })();
+
+
+
+
+
+
+
+    // make an array of the empty board element numbers 
+    // have computer select a random number from that array 
 
