@@ -1,21 +1,23 @@
 "use strict";
-let currentPlayer = null;
-let opponent;
-let board = ['', '', '', '', '', '', '', '', '',];
-let gameIsPaused = true;
-const playerOne = Player('Player One','', true);
-const playerTwo = Player('Player Two','', true); 
-const cpu = Player('CPU','', false); 
-let isListening; 
-
-function Player(name, marker, isHuman) {
-    const validate = (player) => (player.marker !== '' && player.isHuman !=='')
-    return {name, marker, isHuman, validate,}
-}
-
 
 //  FUNCTIONS TO CONTROL THE GAME    //
 const gamePlay = (function () {
+
+    // GLOBAL VARIABLES
+    let currentPlayer = null;
+    let opponent;
+    let board = ['', '', '', '', '', '', '', '', '',];
+    let gameIsPaused = true;
+    const playerOne = Player('Player One','', true);
+    const playerTwo = Player('Player Two','', true); 
+    const cpu = Player('CPU','', false); 
+    let isListening; 
+
+    // Create player objects 
+    function Player(name, marker, isHuman) {
+        const validate = (player) => (player.marker !== '' && player.isHuman !=='')
+        return {name, marker, isHuman, validate,}
+    }
 
     // Select Current Player:
     function chooseFirstPlayer() {
@@ -93,7 +95,6 @@ const gamePlay = (function () {
             if (currentPlayer === playerOne || currentPlayer === playerTwo) startListening(); 
         }
     };
-    
     document.querySelector('#start').addEventListener('click', startGame); 
 
     // CHECK IF EITHER PLAYER HAS WON
@@ -213,7 +214,7 @@ const gamePlay = (function () {
         };
     };
   
-// the problem here is with filter. i need to return an array with the index numbers of each of the array elements that are empty and then pick a random element from that array 
+    // FUNCTIONS FOR WHEN COMPUTER IS THE OPPONENT: 
     const cpuTakeTurn = () => {
         const emptySquares = []
         for (let i=0; i<board.length; i++) {
@@ -230,7 +231,7 @@ const gamePlay = (function () {
 
     }
   
-    
+    // CPU TAKE TURN, CHECK FOR TIE, AND CHECK FOR WINNER, IF NOT CHANGE CURRENT PLAYER 
     const computerPlay = () => {
         stopListening(); 
         cpuTakeTurn(); 
@@ -244,7 +245,7 @@ const gamePlay = (function () {
         }
     };
 
-    // RESET BUTTON
+    // RESET BUTTON to restart game, reset markers and opponents: 
     const reset = () => { 
         gameIsPaused = false;
 
@@ -279,7 +280,8 @@ const gamePlay = (function () {
         hideElement(winnerWrapper);
     };
     document.getElementById('clear').addEventListener('click', reset);
-
+    
+    // Clear board button to restart game without resetting markers or opponent: 
     const clearBoard = () => {
         const winnerWrapper = document.getElementById('winner-wrapper')
         winnerWrapper.classList.remove('winner-wrapper-showing'); 
@@ -308,7 +310,6 @@ const gamePlay = (function () {
     const hideElement = (elem) => {
         elem.style.display = "none"
     }
-
 })();
 
 const controlDisplay = (function () {
@@ -354,13 +355,3 @@ const controlDisplay = (function () {
         window.open('https://github.com/saskiabt/tic-tac-toe','_blank')
     })
 })();
-
-
-
-
-
-
-
-    // make an array of the empty board element numbers 
-    // have computer select a random number from that array 
-

@@ -4,9 +4,13 @@ Browser tic-tac-toe game in JS, written using modules and factory functions.
 Functionality and specs: 
 
 - Player can choose their marker (X or O) on landing page.
+
 - Landing page links to source code on Github if player clicks on signature. 
+
 - Player selects their opponent (human or bot). 
-- All players are saved in player objects, created using factory function. 
+
+- All players are saved in player objects, created using factory function.
+
 - Player makes move by clicking on gameboard square. When click registers on gameboard square, script checks for 3 in a row of any of the winning combinations on the board, and declares a winner if 3-in-a-row is found. If no winner is found, script checks for a tie (if all game board squares are full). If there is no winner, and game is not a tie, the current player's marker is placed on gameboard square where click is registered. 
 
 - If one player reaches three in a row, winner is delcared in the display. 
@@ -18,3 +22,5 @@ Functionality and specs:
 - Original UI and design. 
 
 - Media queries to resize game for mobile, tablet and laptop. Should work on phone and any sized window, with consistent styling. I think I spent the greatest amount of time adjusting the styling, but I learned a lot about responsive design through experimenting with different device sizes on devTools.
+
+- CPU opponent that makes a random move. I will be implementing an AI later, but for now the computer opponent can play in any empty gameboard square, and the script checks for a tie or a winner.
