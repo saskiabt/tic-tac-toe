@@ -78,7 +78,7 @@ const gamePlay = (function () {
     const humanOrBot = document.querySelectorAll('.human-bot') 
     humanOrBot.forEach( button => button.addEventListener('click', chooseOpponent)); 
 
-
+// BUG WHERE BUTTON IS DISABLED IF YOU CLICK ON BOT, THEN START.
     const startGame = function () {
         if (!playerOne.validate(playerOne) && !playerTwo.validate(playerTwo)) {
             document.querySelector('#start').disabled = true; 

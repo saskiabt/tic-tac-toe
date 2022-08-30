@@ -293,8 +293,8 @@ h1 {
     background-color: #004dff;
     color: white;
     box-shadow: rgb(45 35 66 / 40%) 0 2px 4px, rgb(45 35 66 / 30%) 0 7px 13px -3px, #677e9e -1px 1px 0px 1px;
-    position: fixed;
-    bottom: 58px;
+    /* position: fixed;
+    bottom: 58px; */
 }
 
 #start:hover {
