@@ -355,7 +355,7 @@ button {
   font-family: source-serif-pro, serif;
   font-weight: 300;
   font-style: normal;
-  border: 3px solid blue;
+  /* border: 3px solid blue; */
   width: 72vw;
   min-width: 200px;
   height: 70vh;
